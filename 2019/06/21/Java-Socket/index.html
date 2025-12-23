@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"vs2015"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="多线程版UDP及线程池版的TCP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA|Socket编程实例">
+<meta property="og:url" content="http://example.com/2019/06/21/Java-Socket/index.html">
+<meta property="og:site_name" content="Mencia&#39;s Blog">
+<meta property="og:description" content="多线程版UDP及线程池版的TCP">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2019/06/21/Java-Socket/1.png">
+<meta property="og:image" content="http://example.com/2019/06/21/Java-Socket/2.png">
+<meta property="og:image" content="http://example.com/2019/06/21/Java-Socket/3.png">
+<meta property="og:image" content="http://example.com/2019/06/21/Java-Socket/4.png">
+<meta property="og:image" content="http://example.com/2019/06/21/Java-Socket/5.png">
+<meta property="og:image" content="http://example.com/2019/06/21/Java-Socket/6.png">
+<meta property="og:image" content="http://example.com/2019/06/21/Java-Socket/7.png">
+<meta property="og:image" content="http://example.com/2019/06/21/Java-Socket/8.png">
+<meta property="og:image" content="http://example.com/2019/06/21/Java-Socket/9.png">
+<meta property="article:published_time" content="2019-06-21T13:16:58.000Z">
+<meta property="article:modified_time" content="2025-07-14T16:00:56.000Z">
+<meta property="article:author" content="Mengqiu">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Socket">
+<meta property="article:tag" content="分布式">
+<meta property="article:tag" content="TCP">
+<meta property="article:tag" content="UDP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2019/06/21/Java-Socket/1.png">
+
+
+<link rel="canonical" href="http://example.com/2019/06/21/Java-Socket/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/06/21/Java-Socket/","path":"2019/06/21/Java-Socket/","title":"JAVA|Socket编程实例"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JAVA|Socket编程实例 | Mencia's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mencia's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-IP%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">TCP&#x2F;IP网络体系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP%E5%85%88%E4%BA%8EOSI%E6%A8%A1%E5%9E%8B%EF%BC%8C%E4%B8%8D%E5%AE%8C%E5%85%A8%E7%AC%A6%E5%90%88OSI%E6%A0%87%E5%87%86"><span class="nav-number">1.1.</span> <span class="nav-text">TCP&#x2F;IP先于OSI模型，不完全符合OSI标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP%E5%9B%9B%E5%B1%82%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">TCP&#x2F;IP四层模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E5%B1%82%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AD%98%E5%9C%A8%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">各层网络协议的存在位置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Socket%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="nav-number">2.</span> <span class="nav-text">Socket套接字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFsocket%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">什么是socket？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">Socket类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E5%85%B8%E5%9E%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.3.</span> <span class="nav-text">TCP套接字编程典型模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UDP%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BC%96%E7%A8%8B%E5%85%B8%E5%9E%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.4.</span> <span class="nav-text">UDP套接字编程典型模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%9C%8D%E5%8A%A1%E6%8A%80%E6%9C%AF"><span class="nav-number">3.</span> <span class="nav-text">并发服务技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E6%9C%8D%E5%8A%A1%E6%8A%80%E6%9C%AF"><span class="nav-number">3.1.</span> <span class="nav-text">基于多线程的并发服务技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E5%B9%B6%E5%8F%91%E6%9C%8D%E5%8A%A1%E6%8A%80%E6%9C%AF"><span class="nav-number">3.2.</span> <span class="nav-text">基于线程池的并发服务技术</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">Java实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%89%88UDP"><span class="nav-number">4.1.</span> <span class="nav-text">多线程版UDP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%89%88%E7%9A%84TCP"><span class="nav-number">4.2.</span> <span class="nav-text">线程池版的TCP</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Mengqiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/21/Java-Socket/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mengqiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mencia's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JAVA|Socket编程实例 | Mencia's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JAVA|Socket编程实例
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-06-21 21:16:58" itemprop="dateCreated datePublished" datetime="2019-06-21T21:16:58+08:00">2019-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-07-15 00:00:56" itemprop="dateModified" datetime="2025-07-15T00:00:56+08:00">2025-07-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>多线程版UDP及线程池版的TCP</strong><br><span id="more"></span></p>
+<h1 id="TCP-IP网络体系"><a href="#TCP-IP网络体系" class="headerlink" title="TCP/IP网络体系"></a>TCP/IP网络体系</h1><h2 id="TCP-IP先于OSI模型，不完全符合OSI标准"><a href="#TCP-IP先于OSI模型，不完全符合OSI标准" class="headerlink" title="TCP/IP先于OSI模型，不完全符合OSI标准"></a>TCP/IP先于OSI模型，不完全符合OSI标准</h2><p><img src="/2019/06/21/Java-Socket/1.png" alt="1"></p>
+<h2 id="TCP-IP四层模型"><a href="#TCP-IP四层模型" class="headerlink" title="TCP/IP四层模型"></a>TCP/IP四层模型</h2><blockquote>
+<p>也可分为五层，将网络接口层分为两层</p>
+</blockquote>
+<p><img src="/2019/06/21/Java-Socket/2.png" alt="2"></p>
+<h2 id="各层网络协议的存在位置"><a href="#各层网络协议的存在位置" class="headerlink" title="各层网络协议的存在位置"></a>各层网络协议的存在位置</h2><ul>
+<li>路由器中只包含物理层、链路层、网络层协议实现模块</li>
+<li>主机中包含五层协议实现模块</li>
+<li>操作系统负责实现传输层及以下网络协议的实现<br><img src="/2019/06/21/Java-Socket/3.png" alt="3"></li>
+</ul>
+<h1 id="Socket套接字"><a href="#Socket套接字" class="headerlink" title="Socket套接字"></a>Socket套接字</h1><h2 id="什么是socket？"><a href="#什么是socket？" class="headerlink" title="什么是socket？"></a>什么是socket？</h2><p>传输层和网络层提供给应用层的标准化编程接口（或称为编程接口）<br><img src="/2019/06/21/Java-Socket/4.png" alt="4"></p>
+<h2 id="Socket类型"><a href="#Socket类型" class="headerlink" title="Socket类型"></a>Socket类型</h2><ul>
+<li>流式套接字</li>
+<li>数据报套接字</li>
+<li>原始套接字<br><img src="/2019/06/21/Java-Socket/5.png" width="70%" height="70%" div align="center"></li>
+</ul>
+<h2 id="TCP套接字编程典型模型"><a href="#TCP套接字编程典型模型" class="headerlink" title="TCP套接字编程典型模型"></a>TCP套接字编程典型模型</h2><p><img src="/2019/06/21/Java-Socket/6.png" alt="6"></p>
+<h2 id="UDP套接字编程典型模型"><a href="#UDP套接字编程典型模型" class="headerlink" title="UDP套接字编程典型模型"></a>UDP套接字编程典型模型</h2><p><img src="/2019/06/21/Java-Socket/7.png" alt="7"></p>
+<h1 id="并发服务技术"><a href="#并发服务技术" class="headerlink" title="并发服务技术"></a>并发服务技术</h1><h2 id="基于多线程的并发服务技术"><a href="#基于多线程的并发服务技术" class="headerlink" title="基于多线程的并发服务技术"></a>基于多线程的并发服务技术</h2><p><img src="/2019/06/21/Java-Socket/8.png" alt="8"></p>
+<h2 id="基于线程池的并发服务技术"><a href="#基于线程池的并发服务技术" class="headerlink" title="基于线程池的并发服务技术"></a>基于线程池的并发服务技术</h2><p><img src="/2019/06/21/Java-Socket/9.png" alt="9"></p>
+<h1 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h1><h2 id="多线程版UDP"><a href="#多线程版UDP" class="headerlink" title="多线程版UDP"></a>多线程版UDP</h2><p><strong>UDPClient.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> yun_computer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UDPClient</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    	</span><br><span class="line">        <span class="type">InetAddress</span> <span class="variable">address</span> <span class="operator">=</span> InetAddress.getByName(<span class="string">&quot;localhost&quot;</span>);</span><br><span class="line">        <span class="type">int</span> <span class="variable">port</span> <span class="operator">=</span> <span class="number">8800</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">userInput</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="type">byte</span>[] data= <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="type">byte</span>[] reply = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="type">BufferedReader</span> <span class="variable">stdIn</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(System.in));</span><br><span class="line">        <span class="type">DatagramSocket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DatagramSocket</span>();</span><br><span class="line">        DatagramPacket p1,p2 = <span class="literal">null</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> ((userInput=stdIn.readLine())!=<span class="literal">null</span>) &#123;</span><br><span class="line">        	data = userInput.getBytes();</span><br><span class="line">            p1 = <span class="keyword">new</span> <span class="title class_">DatagramPacket</span>(data, data.length, address, port);</span><br><span class="line">            socket.send(p1);</span><br><span class="line">            </span><br><span class="line">            p2 = <span class="keyword">new</span> <span class="title class_">DatagramPacket</span>(reply, reply.length);</span><br><span class="line">            socket.receive(p2);</span><br><span class="line">            </span><br><span class="line">            <span class="type">String</span> <span class="variable">info</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(reply, <span class="number">0</span>, p2.getLength());</span><br><span class="line">            System.out.println(<span class="string">&quot;Server：&quot;</span> + info);</span><br><span class="line">		&#125;</span><br><span class="line">        socket.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>UDPThread.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> yun_computer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UDPThread</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="type">DatagramSocket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">DatagramPacket</span> <span class="variable">packet</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UDPThread</span><span class="params">(DatagramSocket socket, DatagramPacket packet)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.socket = socket;</span><br><span class="line">        <span class="built_in">this</span>.packet = packet;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">info</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">byte</span>[] reply = <span class="literal">null</span>;</span><br><span class="line">        <span class="type">DatagramPacket</span> <span class="variable">p</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">        	<span class="type">InetAddress</span> <span class="variable">address</span> <span class="operator">=</span> packet.getAddress();</span><br><span class="line">            System.out.println(<span class="string">&quot;IP：&quot;</span> + address.getHostAddress());</span><br><span class="line">            </span><br><span class="line">            info = <span class="keyword">new</span> <span class="title class_">String</span>(packet.getData(), <span class="number">0</span>, packet.getLength());</span><br><span class="line">            System.out.println(<span class="string">&quot;Message from Client：&quot;</span> + info);</span><br><span class="line"></span><br><span class="line">            reply = <span class="string">&quot;Successful reception&quot;</span>.getBytes();</span><br><span class="line">            p = <span class="keyword">new</span> <span class="title class_">DatagramPacket</span>(reply, reply.length, packet.getAddress(), packet.getPort());</span><br><span class="line">            socket.send(p);</span><br><span class="line">            </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>UDPServer.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> yun_computer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UDPServer</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    	</span><br><span class="line">    	<span class="type">byte</span>[] data = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="type">DatagramSocket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DatagramSocket</span>(<span class="number">8800</span>);</span><br><span class="line">        <span class="type">DatagramPacket</span> <span class="variable">packet</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DatagramPacket</span>(data, data.length);</span><br><span class="line">        </span><br><span class="line">        System.out.println(<span class="string">&quot;Server...&quot;</span>);</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            socket.receive(packet);</span><br><span class="line">            <span class="type">UDPThread</span> <span class="variable">udp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UDPThread</span>(socket, packet);</span><br><span class="line">            udp.run();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="线程池版的TCP"><a href="#线程池版的TCP" class="headerlink" title="线程池版的TCP"></a>线程池版的TCP</h2><p><strong>TCPClient.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> yun_computer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TCPClient</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		 </span><br><span class="line">		<span class="type">String</span> <span class="variable">userInput</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">String</span> <span class="variable">echoMessage</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="type">BufferedReader</span> <span class="variable">stdIn</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(System.in));</span><br><span class="line">		</span><br><span class="line">		<span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Socket</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">8189</span>);</span><br><span class="line">		System.out.println(<span class="string">&quot;Connected to Server&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="type">InputStream</span> <span class="variable">inStream</span> <span class="operator">=</span> socket.getInputStream();</span><br><span class="line">		<span class="type">OutputStream</span> <span class="variable">outStream</span> <span class="operator">=</span> socket.getOutputStream();</span><br><span class="line">		<span class="type">BufferedReader</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(inStream));</span><br><span class="line">		<span class="type">PrintWriter</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PrintWriter</span>(outStream);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">while</span>((userInput=stdIn.readLine())!=<span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(userInput);</span><br><span class="line">			out.flush();</span><br><span class="line">			echoMessage = in.readLine();</span><br><span class="line">			System.out.println(<span class="string">&quot;Echo from server: &quot;</span> + echoMessage);</span><br><span class="line">		&#125;</span><br><span class="line">		socket.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>TCPThread.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> yun_computer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TCPThread</span> <span class="keyword">extends</span> <span class="title class_">Thread</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">TCPThread</span><span class="params">(Socket socket)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.socket = socket;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>&#123;</span><br><span class="line">        InputStream is=<span class="literal">null</span>;</span><br><span class="line">        InputStreamReader isr=<span class="literal">null</span>;</span><br><span class="line">        BufferedReader br=<span class="literal">null</span>;</span><br><span class="line">        OutputStream os=<span class="literal">null</span>;</span><br><span class="line">        PrintWriter pw=<span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            is = socket.getInputStream();</span><br><span class="line">            isr = <span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(is);</span><br><span class="line">            br = <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(isr);</span><br><span class="line">			os = socket.getOutputStream();</span><br><span class="line">            pw = <span class="keyword">new</span> <span class="title class_">PrintWriter</span>(os);</span><br><span class="line">            String info=<span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">while</span>((info=br.readLine())!=<span class="literal">null</span>)&#123;</span><br><span class="line">            	<span class="type">InetAddress</span> <span class="variable">address</span> <span class="operator">=</span> socket.getInetAddress();</span><br><span class="line">                System.out.println(<span class="string">&quot;IP：&quot;</span> + address.getHostAddress());</span><br><span class="line">                System.out.println(<span class="string">&quot;Message from client:&quot;</span>+info);</span><br><span class="line">				pw.println(info);</span><br><span class="line">				pw.flush();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(pw!=<span class="literal">null</span>)</span><br><span class="line">                    pw.close();</span><br><span class="line">                <span class="keyword">if</span>(os!=<span class="literal">null</span>)</span><br><span class="line">                    os.close();</span><br><span class="line">                <span class="keyword">if</span>(br!=<span class="literal">null</span>)</span><br><span class="line">                    br.close();</span><br><span class="line">                <span class="keyword">if</span>(isr!=<span class="literal">null</span>)</span><br><span class="line">                    isr.close();</span><br><span class="line">                <span class="keyword">if</span>(is!=<span class="literal">null</span>)</span><br><span class="line">                    is.close();</span><br><span class="line">                <span class="keyword">if</span>(socket!=<span class="literal">null</span>)</span><br><span class="line">                    socket.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p><strong>TCPServer.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> yun_computer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TCPServer</span> &#123;</span><br><span class="line">	 <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		 <span class="type">int</span> n=<span class="number">2</span>;</span><br><span class="line">		 <span class="type">int</span> m=<span class="number">4</span>;</span><br><span class="line">		 </span><br><span class="line">		 <span class="type">ThreadPoolExecutor</span> <span class="variable">executor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(n, m, <span class="number">200</span>, TimeUnit.MILLISECONDS,  </span><br><span class="line">	                <span class="keyword">new</span> <span class="title class_">ArrayBlockingQueue</span>&lt;Runnable&gt;(n));</span><br><span class="line">		 </span><br><span class="line">		 <span class="type">ServerSocket</span> <span class="variable">listenSocket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>(<span class="number">8189</span>); </span><br><span class="line">		 System.out.println(<span class="string">&quot;Server listening at 8189&quot;</span>);</span><br><span class="line">		 </span><br><span class="line">		 <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;(n+m);i++) &#123;</span><br><span class="line">			 <span class="type">Socket</span> <span class="variable">clientSocket</span> <span class="operator">=</span> listenSocket.accept();</span><br><span class="line">			 System.out.println(<span class="string">&quot;Accepted connection from client&quot;</span>);</span><br><span class="line">			 TCPThread tcp=<span class="keyword">new</span> <span class="title class_">TCPThread</span>(clientSocket);</span><br><span class="line">			 executor.execute(tcp);</span><br><span class="line">		 &#125;</span><br><span class="line">		 executor.shutdown();</span><br><span class="line">		 listenSocket.close();</span><br><span class="line">	 &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/Socket/" rel="tag"># Socket</a>
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag"># 分布式</a>
+              <a href="/tags/TCP/" rel="tag"># TCP</a>
+              <a href="/tags/UDP/" rel="tag"># UDP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/19/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="prev" title="NOTE|人工智能">
+                  <i class="fa fa-angle-left"></i> NOTE|人工智能
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="next" title="JAVA|面向消息中间件">
+                  JAVA|面向消息中间件 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mengqiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '32px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+</body>
+</html>

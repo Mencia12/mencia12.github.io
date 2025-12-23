@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"vs2015"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="面向消息中间件（Message Oriented Middleware）提供了一种分布式消息队列服务，使得节点之间可以实现基于消息的形式灵活的异步通信。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA|面向消息中间件">
+<meta property="og:url" content="http://example.com/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Mencia&#39;s Blog">
+<meta property="og:description" content="面向消息中间件（Message Oriented Middleware）提供了一种分布式消息队列服务，使得节点之间可以实现基于消息的形式灵活的异步通信。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/1.png">
+<meta property="og:image" content="http://example.com/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/2.png">
+<meta property="og:image" content="http://example.com/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/3.png">
+<meta property="og:image" content="http://example.com/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/4.png">
+<meta property="og:image" content="http://example.com/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/5.png">
+<meta property="article:published_time" content="2019-06-22T08:29:34.000Z">
+<meta property="article:modified_time" content="2025-07-14T16:00:56.000Z">
+<meta property="article:author" content="Mengqiu">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="分布式">
+<meta property="article:tag" content="MOM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/1.png">
+
+
+<link rel="canonical" href="http://example.com/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/","path":"2019/06/22/中间件/","title":"JAVA|面向消息中间件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JAVA|面向消息中间件 | Mencia's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mencia's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">两种通信模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">点对点通信模式：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83-%E8%AE%A2%E9%98%85%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">发布&#x2F;订阅通信模式：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84MOM%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">常用的MOM中间件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">编程示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">4.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.3.</span> <span class="nav-text">实现</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Mengqiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mengqiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mencia's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JAVA|面向消息中间件 | Mencia's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JAVA|面向消息中间件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-06-22 16:29:34" itemprop="dateCreated datePublished" datetime="2019-06-22T16:29:34+08:00">2019-06-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-07-15 00:00:56" itemprop="dateModified" datetime="2025-07-15T00:00:56+08:00">2025-07-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>面向消息中间件（Message Oriented Middleware）提供了一种分布式消息队列服务，使得节点之间可以实现基于消息的形式灵活的异步通信。</strong><br><span id="more"></span></p>
+<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p><img src="/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/1.png" alt="1"></p>
+<h1 id="两种通信模式"><a href="#两种通信模式" class="headerlink" title="两种通信模式"></a>两种通信模式</h1><h2 id="点对点通信模式："><a href="#点对点通信模式：" class="headerlink" title="点对点通信模式："></a>点对点通信模式：</h2><ul>
+<li>用于消息生产者和消息消费者之间点点对点通信，相当于在生产者和消费者之间建立了一个点对点消息队列</li>
+<li>每个消息只有一个消费者，不可重复消费(一旦被消费，消息就不再在消息队列中)</li>
+<li>高级队列模式：带优先级的队列；支持持久性的队列</li>
+</ul>
+<h2 id="发布-订阅通信模式："><a href="#发布-订阅通信模式：" class="headerlink" title="发布/订阅通信模式："></a>发布/订阅通信模式：</h2><ul>
+<li>支持向一个特定的消息主题发布消息。 多个订阅者可以同时关注并接收来自特定消息主题的消息</li>
+<li>可以灵活地实现广播、组播和多对多等通信模式</li>
+<li>可以支持持久性、事务机制等高级功能</li>
+</ul>
+<h1 id="常用的MOM中间件"><a href="#常用的MOM中间件" class="headerlink" title="常用的MOM中间件"></a>常用的MOM中间件</h1><p><strong>ActiveMQ：</strong></p>
+<blockquote>
+<p>由 Apache 出品，完全兼容JMS（Java Message Service）<br>为多种编程语言提供客户端API<br>内部支持多种通信协议<br>必须部署中心服务器作为消息路由代理。中心服务器可由服务器集群代替。</p>
+</blockquote>
+<p><strong>RabbitMQ：</strong></p>
+<blockquote>
+<p>采用Erlang语言实现的AMQP协议的消息中间件，最初起源于金融系统。</p>
+</blockquote>
+<p><strong>RocketMQ：</strong></p>
+<blockquote>
+<p>阿里 的开源产品，用 Java 语言实现；在阿里内部被广泛应用在订单，交易，充值，流计算，消息推送，日志流式处理等场景。</p>
+</blockquote>
+<p><strong>Apache Kafka：</strong></p>
+<blockquote>
+<p>提供完全分布式架构，与Apache的其他平台如Hadoop、Apache Storm、Spark、Flink等集成方便。</p>
+</blockquote>
+<p><strong>ZeroMQ：</strong></p>
+<blockquote>
+<p>号称史上最快的消息队列，基于C语言开发。</p>
+</blockquote>
+<p><strong>WebsphereMQ：</strong></p>
+<blockquote>
+<p>IBM的MOM中间件产品</p>
+</blockquote>
+<h1 id="编程示例"><a href="#编程示例" class="headerlink" title="编程示例"></a>编程示例</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>利用MOM消息队列技术实现一个分布式随机信号分析系统，具体要求：</p>
+<ol>
+<li>随机信号产生器每隔10毫秒左右就产生一个正态分布的随机数字，并作为一个消息发布。</li>
+<li>多个随机信号分析模块订阅并接收该随机数字，然后对信号进行分析并实时显示分析结果。至少包含如下分析模块：<ul>
+<li>计算随机信号的均值；</li>
+<li>计算过去N个随机信号的方差（N为常量，可设置）</li>
+<li>实现基于正态分布的异常点检测$\mu \pm 3 \sigma$</li>
+</ul>
+</li>
+</ol>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><strong>Publisher.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> topic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.jms.Connection;</span><br><span class="line"><span class="keyword">import</span> javax.jms.ConnectionFactory;</span><br><span class="line"><span class="keyword">import</span> javax.jms.JMSException;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Message;</span><br><span class="line"><span class="keyword">import</span> javax.jms.MessageProducer;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Session;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Topic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.activemq.ActiveMQConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Publisher</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">brokerURL</span> <span class="operator">=</span> <span class="string">&quot;tcp://localhost:61616&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ConnectionFactory factory;</span><br><span class="line">    <span class="keyword">private</span> Connection connection;</span><br><span class="line">    <span class="keyword">private</span> Session session;</span><br><span class="line">    <span class="keyword">private</span> MessageProducer producer;</span><br><span class="line">	<span class="keyword">private</span> Topic topic;</span><br><span class="line">	<span class="keyword">private</span> Random random=<span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line">	<span class="keyword">private</span> String d;</span><br><span class="line">	<span class="keyword">static</span> Scanner in=<span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Publisher</span><span class="params">(String topicName)</span> <span class="keyword">throws</span> JMSException &#123;</span><br><span class="line">		</span><br><span class="line">    	factory = <span class="keyword">new</span> <span class="title class_">ActiveMQConnectionFactory</span>(brokerURL);</span><br><span class="line">    	connection = factory.createConnection();</span><br><span class="line">        </span><br><span class="line">        session = connection.createSession(<span class="literal">false</span>, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">		topic = session.createTopic(topicName);</span><br><span class="line">        producer = session.createProducer(topic);</span><br><span class="line">        producer.setTimeToLive(<span class="number">1000</span>);</span><br><span class="line">		connection.start();</span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">close</span><span class="params">()</span> <span class="keyword">throws</span> JMSException &#123;</span><br><span class="line">        <span class="keyword">if</span> (connection != <span class="literal">null</span>) &#123;</span><br><span class="line">            connection.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JMSException, InterruptedException, IOException &#123;</span><br><span class="line"><span class="comment">//    	System.out.println(&quot;Please input u and a&quot;);</span></span><br><span class="line"><span class="comment">//    	int u=in.nextInt();</span></span><br><span class="line"><span class="comment">//    	int a=in.nextInt();</span></span><br><span class="line">    	<span class="type">int</span> u=<span class="number">0</span>;</span><br><span class="line">    	<span class="type">int</span> a=<span class="number">1</span>;</span><br><span class="line">    	<span class="type">Publisher</span> <span class="variable">publisher</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Publisher</span>(<span class="string">&quot;Gaussian&quot;</span>);</span><br><span class="line">    	<span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">    	<span class="type">long</span> <span class="variable">t1</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">    	<span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">    	&#123;</span><br><span class="line">    		i++;</span><br><span class="line">    		<span class="type">long</span> <span class="variable">t2</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">    		<span class="keyword">if</span>(t2-t1&gt;<span class="number">10000</span>)</span><br><span class="line">    		&#123;</span><br><span class="line">    			<span class="keyword">break</span>;</span><br><span class="line">    		&#125;</span><br><span class="line">    		publisher.sendMessage(u,a,i);</span><br><span class="line">    		Thread.sleep(<span class="number">10</span>);</span><br><span class="line">		&#125;</span><br><span class="line">    	publisher.close();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sendMessage</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> i)</span> <span class="keyword">throws</span> JMSException &#123;</span><br><span class="line">    	d = Double.toString(b*random.nextGaussian()+a);</span><br><span class="line">        <span class="type">Message</span> <span class="variable">message</span> <span class="operator">=</span> session.createTextMessage(d);</span><br><span class="line">        producer.send(message);</span><br><span class="line">        System.out.println(<span class="string">&quot;Sent number &quot;</span>+i+<span class="string">&quot; :&quot;</span>+d);</span><br><span class="line">    &#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>ASyncConsumer_ave.java</strong>（计算均值）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> topic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.jms.Connection;</span><br><span class="line"><span class="keyword">import</span> javax.jms.ConnectionFactory;</span><br><span class="line"><span class="keyword">import</span> javax.jms.JMSException;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Message;</span><br><span class="line"><span class="keyword">import</span> javax.jms.MessageConsumer;</span><br><span class="line"><span class="keyword">import</span> javax.jms.MessageListener;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Session;</span><br><span class="line"><span class="keyword">import</span> javax.jms.TextMessage;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Topic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.activemq.ActiveMQConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Average</span> <span class="keyword">implements</span> <span class="title class_">MessageListener</span> &#123;</span><br><span class="line">	<span class="type">int</span> num=<span class="number">0</span>;</span><br><span class="line">	<span class="type">double</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onMessage</span><span class="params">(Message message)</span> &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			String ss=((TextMessage)message).getText();</span><br><span class="line">			num++;</span><br><span class="line">			sum+=Double.valueOf(ss);</span><br><span class="line">			System.out.println(<span class="string">&quot;number:&quot;</span>+num+<span class="string">&quot; average:&quot;</span>+sum/num);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ASyncConsumer_ave</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JMSException &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">brokerURL</span> <span class="operator">=</span> <span class="string">&quot;tcp://localhost:61616&quot;</span>;</span><br><span class="line">		<span class="type">ConnectionFactory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">Session</span> <span class="variable">session</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">Topic</span> <span class="variable">topic</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">MessageConsumer</span> <span class="variable">messageConsumer</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		Average average=<span class="literal">null</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			factory = <span class="keyword">new</span> <span class="title class_">ActiveMQConnectionFactory</span>(brokerURL);</span><br><span class="line">			connection = factory.createConnection();</span><br><span class="line">			connection.start();</span><br><span class="line">			</span><br><span class="line">			session = connection.createSession(<span class="literal">false</span>, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">			topic = session.createTopic(<span class="string">&quot;Gaussian&quot;</span>);</span><br><span class="line"></span><br><span class="line">			messageConsumer = session.createConsumer(topic);</span><br><span class="line">			</span><br><span class="line">			average = <span class="keyword">new</span> <span class="title class_">Average</span>();</span><br><span class="line">			</span><br><span class="line">			messageConsumer.setMessageListener(average);</span><br><span class="line">			</span><br><span class="line">			System.out.println(<span class="string">&quot;Press any key to exit.&quot;</span>);</span><br><span class="line">			System.in.read();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			connection.close();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>ASyncConsumer_var.java</strong>（计算方差）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> topic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.jms.Connection;</span><br><span class="line"><span class="keyword">import</span> javax.jms.ConnectionFactory;</span><br><span class="line"><span class="keyword">import</span> javax.jms.JMSException;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Message;</span><br><span class="line"><span class="keyword">import</span> javax.jms.MessageConsumer;</span><br><span class="line"><span class="keyword">import</span> javax.jms.MessageListener;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Session;</span><br><span class="line"><span class="keyword">import</span> javax.jms.TextMessage;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Topic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.activemq.ActiveMQConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Variance</span> <span class="keyword">implements</span> <span class="title class_">MessageListener</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> ArrayList&lt;Double&gt; p = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Double&gt;();</span><br><span class="line">	<span class="keyword">private</span> <span class="type">int</span> n=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Variance</span><span class="params">(<span class="type">int</span> N)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.n=N;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onMessage</span><span class="params">(Message message)</span> &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			String ss=((TextMessage)message).getText();</span><br><span class="line">			p.add(Double.valueOf(ss));</span><br><span class="line">			<span class="type">double</span> <span class="variable">ave</span> <span class="operator">=</span> <span class="number">0.0</span>;</span><br><span class="line">			<span class="type">double</span> <span class="variable">var</span> <span class="operator">=</span> <span class="number">0.0</span>;</span><br><span class="line">			<span class="keyword">if</span>(p.size()&gt;=n)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++) &#123;</span><br><span class="line">					ave += p.get(i);</span><br><span class="line">				&#125;</span><br><span class="line">				ave /= n;</span><br><span class="line">				<span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++) &#123;</span><br><span class="line">					<span class="keyword">var</span> += (p.get(i) - ave) * (p.get(i) - ave);</span><br><span class="line">				&#125;</span><br><span class="line">				System.out.println(<span class="string">&quot;Variance：&quot;</span>+<span class="keyword">var</span>/n);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ASyncConsumer_var</span> &#123;</span><br><span class="line">	<span class="keyword">static</span> Scanner in=<span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JMSException &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">brokerURL</span> <span class="operator">=</span> <span class="string">&quot;tcp://localhost:61616&quot;</span>;</span><br><span class="line">		<span class="type">ConnectionFactory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">Session</span> <span class="variable">session</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">Topic</span> <span class="variable">topic</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">MessageConsumer</span> <span class="variable">messageConsumer</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		Variance variance=<span class="literal">null</span>;</span><br><span class="line">		</span><br><span class="line">        </span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			factory = <span class="keyword">new</span> <span class="title class_">ActiveMQConnectionFactory</span>(brokerURL);</span><br><span class="line">			connection = factory.createConnection();</span><br><span class="line">			connection.start();</span><br><span class="line">			</span><br><span class="line">			session = connection.createSession(<span class="literal">false</span>, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">			topic = session.createTopic(<span class="string">&quot;Gaussian&quot;</span>);</span><br><span class="line"></span><br><span class="line">			messageConsumer = session.createConsumer(topic);</span><br><span class="line"></span><br><span class="line">			System.out.println(<span class="string">&quot;Input N:&quot;</span>);</span><br><span class="line">			<span class="type">int</span> n=in.nextInt();</span><br><span class="line">			</span><br><span class="line">			variance=<span class="keyword">new</span> <span class="title class_">Variance</span>(n);</span><br><span class="line">			messageConsumer.setMessageListener(variance);</span><br><span class="line">			</span><br><span class="line">			System.out.println(<span class="string">&quot;Press any key to exit.&quot;</span>);</span><br><span class="line">			System.in.read();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			connection.close();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>ASyncConsumer_err.java</strong>（异常点检测）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> topic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.jms.Connection;</span><br><span class="line"><span class="keyword">import</span> javax.jms.ConnectionFactory;</span><br><span class="line"><span class="keyword">import</span> javax.jms.JMSException;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Message;</span><br><span class="line"><span class="keyword">import</span> javax.jms.MessageConsumer;</span><br><span class="line"><span class="keyword">import</span> javax.jms.MessageListener;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Session;</span><br><span class="line"><span class="keyword">import</span> javax.jms.TextMessage;</span><br><span class="line"><span class="keyword">import</span> javax.jms.Topic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.activemq.ActiveMQConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Error</span> <span class="keyword">implements</span> <span class="title class_">MessageListener</span> &#123;</span><br><span class="line">	<span class="type">double</span> u=<span class="number">0</span>;</span><br><span class="line">	<span class="type">double</span> a=<span class="number">0</span>;</span><br><span class="line">	<span class="type">double</span> v=<span class="number">0</span>;</span><br><span class="line">	<span class="type">double</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> num=<span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onMessage</span><span class="params">(Message message)</span> &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="type">double</span> <span class="variable">d</span> <span class="operator">=</span> Double.valueOf(((TextMessage)message).getText());</span><br><span class="line">			sum += d;</span><br><span class="line">			num++;</span><br><span class="line">			<span class="keyword">if</span>(num&gt;<span class="number">1</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				u=sum/num;</span><br><span class="line">				v += (d - u) * (d - u);</span><br><span class="line">				a=Math.sqrt(v/num);</span><br><span class="line">				<span class="keyword">if</span>(d&gt;u-<span class="number">3</span>*a&amp;&amp;d&lt;u+<span class="number">3</span>*a)</span><br><span class="line">				&#123;</span><br><span class="line">					System.out.println(<span class="string">&quot;TRUE &quot;</span>+d);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123;</span><br><span class="line">					System.out.println(<span class="string">&quot;ERROR &quot;</span>+d);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ASyncConsumer_err</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JMSException &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">brokerURL</span> <span class="operator">=</span> <span class="string">&quot;tcp://localhost:61616&quot;</span>;</span><br><span class="line">		<span class="type">ConnectionFactory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">Session</span> <span class="variable">session</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">Topic</span> <span class="variable">topic</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">MessageConsumer</span> <span class="variable">messageConsumer</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		Error error=<span class="literal">null</span>;</span><br><span class="line">        </span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			factory = <span class="keyword">new</span> <span class="title class_">ActiveMQConnectionFactory</span>(brokerURL);</span><br><span class="line">			connection = factory.createConnection();</span><br><span class="line">			connection.start();</span><br><span class="line">			</span><br><span class="line">			session = connection.createSession(<span class="literal">false</span>, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">			topic = session.createTopic(<span class="string">&quot;Gaussian&quot;</span>);</span><br><span class="line"></span><br><span class="line">			messageConsumer = session.createConsumer(topic);</span><br><span class="line">			</span><br><span class="line">			error=<span class="keyword">new</span> <span class="title class_">Error</span>();</span><br><span class="line">			</span><br><span class="line">			messageConsumer.setMessageListener(error);</span><br><span class="line">			</span><br><span class="line">			System.out.println(<span class="string">&quot;Press any key to exit.&quot;</span>);</span><br><span class="line">			System.in.read();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			connection.close();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ol>
+<li>开启ActiveMQ<br><img src="/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/2.png" alt="2"></li>
+<li>用三个窗口分别运行ASyncConsumer_ave.java，ASyncConsumer_var.java和ASyncConsumer_err.java。<br><img src="/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/3.png" alt="3"></li>
+<li>运行Publisher.java输入均值和方差<br><img src="/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/4.png" alt="4"></li>
+<li>结果<br><img src="/2019/06/22/%E4%B8%AD%E9%97%B4%E4%BB%B6/5.png" alt="5"></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag"># 分布式</a>
+              <a href="/tags/MOM/" rel="tag"># MOM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/21/Java-Socket/" rel="prev" title="JAVA|Socket编程实例">
+                  <i class="fa fa-angle-left"></i> JAVA|Socket编程实例
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/06/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="next" title="NOTE|机器学习">
+                  NOTE|机器学习 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mengqiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '32px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+</body>
+</html>

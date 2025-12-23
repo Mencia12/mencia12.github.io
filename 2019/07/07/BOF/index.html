@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"vs2015"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="BoF(Bag of features)算法在图像分类中具有着重要的作用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python|基于BOF算法的图像检索">
+<meta property="og:url" content="http://example.com/2019/07/07/BOF/index.html">
+<meta property="og:site_name" content="Mencia&#39;s Blog">
+<meta property="og:description" content="BoF(Bag of features)算法在图像分类中具有着重要的作用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2019/07/07/BOF/3.png">
+<meta property="og:image" content="http://example.com/2019/07/07/BOF/4.png">
+<meta property="og:image" content="http://example.com/2019/07/07/BOF/5.png">
+<meta property="og:image" content="http://example.com/2019/07/07/BOF/6.png">
+<meta property="og:image" content="http://example.com/2019/07/07/BOF/sift.png">
+<meta property="og:image" content="http://example.com/2019/07/07/BOF/histogram.png">
+<meta property="og:image" content="http://example.com/2019/07/07/BOF/result.png">
+<meta property="og:image" content="http://example.com/2019/07/07/BOF/7.png">
+<meta property="article:published_time" content="2019-07-07T11:43:01.000Z">
+<meta property="article:modified_time" content="2025-07-14T16:00:56.000Z">
+<meta property="article:author" content="Mengqiu">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="BOF">
+<meta property="article:tag" content="OpenCV">
+<meta property="article:tag" content="SIFT">
+<meta property="article:tag" content="Kmeans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2019/07/07/BOF/3.png">
+
+
+<link rel="canonical" href="http://example.com/2019/07/07/BOF/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/07/07/BOF/","path":"2019/07/07/BOF/","title":"Python|基于BOF算法的图像检索"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Python|基于BOF算法的图像检索 | Mencia's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mencia's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">基本流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96"><span class="nav-number">2.1.</span> <span class="nav-text">特征提取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E5%85%B8%E7%94%9F%E6%88%90"><span class="nav-number">2.2.</span> <span class="nav-text">字典生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.3.</span> <span class="nav-text">直方图表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E5%88%86%E7%B1%BB%E5%99%A8"><span class="nav-number">2.4.</span> <span class="nav-text">训练分类器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">算法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">数据预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E5%9B%BE%E5%83%8F%E7%89%B9%E5%BE%81"><span class="nav-number">3.2.</span> <span class="nav-text">提取图像特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E7%89%B9%E5%BE%81%E8%BF%9B%E8%A1%8C%E8%81%9A%E7%B1%BB"><span class="nav-number">3.3.</span> <span class="nav-text">对特征进行聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E5%AD%97%E5%85%B8%E5%B0%86%E5%9B%BE%E7%89%87%E8%A1%A8%E7%A4%BA%E6%88%90%E5%90%91%E9%87%8F"><span class="nav-number">3.4.</span> <span class="nav-text">根据字典将图片表示成向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E9%9B%86%E8%BF%9B%E8%A1%8C%E5%8A%A0%E6%9D%83%E5%8F%8A%E9%87%8F%E5%8C%96"><span class="nav-number">3.5.</span> <span class="nav-text">特征集进行加权及量化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E5%88%86%E7%B1%BB%E5%99%A8-1"><span class="nav-number">3.6.</span> <span class="nav-text">训练分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E6%B5%8B%E5%B9%B6%E6%B5%8B%E8%AF%95"><span class="nav-number">3.7.</span> <span class="nav-text">预测并测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%BA%E9%99%B7"><span class="nav-number">5.</span> <span class="nav-text">缺陷</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Mengqiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/07/BOF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mengqiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mencia's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Python|基于BOF算法的图像检索 | Mencia's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python|基于BOF算法的图像检索
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-07-07 19:43:01" itemprop="dateCreated datePublished" datetime="2019-07-07T19:43:01+08:00">2019-07-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-07-15 00:00:56" itemprop="dateModified" datetime="2025-07-15T00:00:56+08:00">2025-07-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>BoF(Bag of features)算法在图像分类中具有着重要的作用</strong><br><span id="more"></span></p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Bag of Features方法仿照文本检索领域的Bag-of-Words方法，把每幅图像描述为一个局部区域/关键点(Patches/Key Points)特征的无序集合。<br>使用某种聚类算法(如K-means)将局部特征进行聚类，每个聚类中心被看作是词典中的一个<strong>视觉词汇</strong>(Visual Word)，相当于文本检索中的词，视觉词汇由聚类中心对应特征形成的<strong>码字</strong>(code word)来表示。<br>图像中的每个特征都将被映射到视觉词典的某个词上，这种映射可以通过计算特征间的距离去实现，然后统计每个视觉词汇的出现与否或次数，图像可描述为一个维数相同的直方图向量。</p>
+<h1 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h1><p>基本流程可以分为四步：</p>
+<h2 id="特征提取"><a href="#特征提取" class="headerlink" title="特征提取"></a>特征提取</h2><p>从原始图像中提取特征，常用的特征提取方法有SIFT，SURF。SIFT得到的特征描述是128维度的向量，相比SISF，SURF计算量更小些，得到的特征是64维的向量。也有使用HoG和LBP来进行特征提取的。注意特征提取的方法要满足旋转不变性以及尺寸不变性。<br><img src="/2019/07/07/BOF/3.png" alt="3"></p>
+<h2 id="字典生成"><a href="#字典生成" class="headerlink" title="字典生成"></a>字典生成</h2><p>对所有的图片提取完特征后，将所有的特征进行聚类，比如使用K-Means聚类，得到K类，每个类别看作一个word，这样我们就得到了字典，如下图所示。<br><img src="/2019/07/07/BOF/4.png" alt="4"></p>
+<h2 id="直方图表示"><a href="#直方图表示" class="headerlink" title="直方图表示"></a>直方图表示</h2><p>上一步训练得到的字典，是为了这一步对图像特征进行量化。对于一幅图像而言，我们可以提取出大量的特征，但这些特征(如SIFT提取的特征)仍然属于一种浅层的表示，缺乏代表性。因此，这一步的目标，是根据字典重新提取图像的高层特征。具体做法是，对于每一张图片得到的每一个特征(如SIFT提取的特征)，都可以在字典中找到一个最相似的word(实际上就是将特征输入到得到的聚类模型，得到类别)，统计相似的每种word的数量，于是就得到一个K维的直方图。如下图所示。<br><img src="/2019/07/07/BOF/5.png" alt="5"></p>
+<h2 id="训练分类器"><a href="#训练分类器" class="headerlink" title="训练分类器"></a>训练分类器</h2><p>对于每张图片，我们得到了其对应的直方图向量，当然也知道其对应的属于哪种物品的标记。这样我们就可以构造训练集来训练某种分类器。当需要进行预测时，我们先测试集的图片中提取特征，然后利用字典量化得到直方图，输入训练好的分类器，得到预测的类别。</p>
+<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><p>本次实验采用了三个类别：[‘aeroplane’, ‘bicycle’, ‘car’]，在train文件夹下有三个子文件夹表示各类。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">read_paths</span>(<span class="params">path</span>):</span><br><span class="line">    <span class="comment"># 获取训练数据类别</span></span><br><span class="line">    training_names = os.listdir(path)</span><br><span class="line">    <span class="comment"># 获取图片路径及标签</span></span><br><span class="line">    image_paths = [] <span class="comment"># 获取所有图片路径</span></span><br><span class="line">    image_classes = [] <span class="comment">#记录每张图片的标签，[0,...,0,1,...,1,2,...,2]</span></span><br><span class="line">    class_id = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> training_name <span class="keyword">in</span> training_names:</span><br><span class="line">        name = os.path.join(path, training_name)</span><br><span class="line">        class_path = <span class="built_in">list</span>(paths.list_images(name))</span><br><span class="line">        image_paths += class_path</span><br><span class="line">        image_classes += [class_id] * <span class="built_in">len</span>(class_path)</span><br><span class="line">        class_id += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Label \t\t  count&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;---------------------&quot;</span>)</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> training_name <span class="keyword">in</span> training_names:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;&#123;0:10&#125; &#123;1:6d&#125;&#x27;</span>.<span class="built_in">format</span>(training_name, image_classes.count(i)))</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> training_names, image_paths, image_classes</span><br></pre></td></tr></table></figure><br><img src="/2019/07/07/BOF/6.png" alt="6"></p>
+<h2 id="提取图像特征"><a href="#提取图像特征" class="headerlink" title="提取图像特征"></a>提取图像特征</h2><p>这里采用的是OpenCV自带的SIFT算法生成图像库中每幅图的特征点及描述符。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建特征提取和关键点检测器对象</span></span><br><span class="line">sift=cv2.xfeatures2d.SIFT_create()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 特征提取与描述子生成</span></span><br><span class="line">des_list = []</span><br><span class="line"><span class="keyword">for</span> image_path <span class="keyword">in</span> image_paths:</span><br><span class="line">    im = cv2.imread(image_path)</span><br><span class="line">    kpts, des = sift.detectAndCompute(im, <span class="literal">None</span>)</span><br><span class="line">    des_list.append((image_path, des))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;image file path : &quot;</span>, image_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 描述子向量聚合</span></span><br><span class="line">descriptors = des_list[<span class="number">0</span>][<span class="number">1</span>]</span><br><span class="line"><span class="keyword">for</span> image_path, descriptor <span class="keyword">in</span> des_list[<span class="number">1</span>:]:</span><br><span class="line">    descriptors = np.vstack((descriptors, descriptor))</span><br></pre></td></tr></table></figure><br><img src="/2019/07/07/BOF/sift.png" alt="s"></p>
+<h2 id="对特征进行聚类"><a href="#对特征进行聚类" class="headerlink" title="对特征进行聚类"></a>对特征进行聚类</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># kmeans聚类</span></span><br><span class="line">k = <span class="number">100</span></span><br><span class="line">voc,_= kmeans(descriptors, k, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="根据字典将图片表示成向量"><a href="#根据字典将图片表示成向量" class="headerlink" title="根据字典将图片表示成向量"></a>根据字典将图片表示成向量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成特征直方图</span></span><br><span class="line">im_features = np.zeros((<span class="built_in">len</span>(image_paths), k), <span class="string">&quot;float32&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(image_paths)):</span><br><span class="line">    words, distance = vq(des_list[i][<span class="number">1</span>], voc)</span><br><span class="line">    <span class="keyword">for</span> w <span class="keyword">in</span> words:</span><br><span class="line">        im_features[i][w] += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2019/07/07/BOF/histogram.png" alt="h"></p>
+<h2 id="特征集进行加权及量化"><a href="#特征集进行加权及量化" class="headerlink" title="特征集进行加权及量化"></a>特征集进行加权及量化</h2><p>在一篇文档里，“的”“你”“我”等字眼的出现频率高，那么这些word在直方图上的bin就会比较高，并且在每篇文档里都会出现，但是这些并不能作为文档的标识，因此要弱化这些共性特征的权重。</p>
+<blockquote>
+<p>这里采用了TF-IDF加权<br>TF:如果某个关键词在一篇文章中出现的频率高，说明该词语能够表征文章的内容，该关键词在其它文章中很少出现，则认为此词语具有很好的类别区分度，对分类有很大的贡献。<br>IDF:如果文件数据库中包含词语A的文件越少，则IDF越大，说明词语A具有很好的类别区分能力。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># TF-IDF</span></span><br><span class="line">nbr = np.<span class="built_in">sum</span>((im_features &gt; <span class="number">0</span>) * <span class="number">1</span>, axis=<span class="number">0</span>)</span><br><span class="line">idf = np.array(np.log((<span class="number">1.0</span> * <span class="built_in">len</span>(image_paths) + <span class="number">1</span>) / (<span class="number">1.0</span> * nbr + <span class="number">1</span>)), <span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">im_features = im_features * idf</span><br><span class="line">tf = np.zeros((<span class="built_in">len</span>(image_paths), k), <span class="string">&quot;float32&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(image_paths)):</span><br><span class="line">     tf[i] = im_features[i] / (np.<span class="built_in">sum</span>(im_features, axis=<span class="number">1</span>)[i])</span><br><span class="line">     im_features[i] = im_features[i] * tf[i]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 尺度化</span></span><br><span class="line">stdSlr = StandardScaler().fit(im_features)</span><br><span class="line">im_features = stdSlr.transform(im_features)</span><br></pre></td></tr></table></figure></p>
+<h2 id="训练分类器-1"><a href="#训练分类器-1" class="headerlink" title="训练分类器"></a>训练分类器</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clf = LinearSVC()</span><br><span class="line">clf.fit(im_features, np.array(image_classes))</span><br></pre></td></tr></table></figure>
+<p>最后可以将训练的结果打包并保存<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;training and save model...&quot;</span>)</span><br><span class="line">sklearn.externals.joblib.dump((clf, training_names,std_slr, k, voc, idf), <span class="string">&quot;bof.pkl&quot;</span>, compress=<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;========================================&quot;</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="预测并测试"><a href="#预测并测试" class="headerlink" title="预测并测试"></a>预测并测试</h2><p>预测步骤和训练相似，先提取图像特征，将提取的图像特征加权并尺度化，代入训练好的分类器<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">predict_image</span>(<span class="params">image_path</span>):</span><br><span class="line"></span><br><span class="line">    clf, classes_names, std_slr, k, voc, idf = sklearn.externals.joblib.load(<span class="string">&quot;bof.pkl&quot;</span>)</span><br><span class="line"></span><br><span class="line">    sift = cv2.xfeatures2d.SIFT_create()</span><br><span class="line">    im = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)</span><br><span class="line">    kpts, des = sift.detectAndCompute(im, <span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">    test_features = np.zeros((<span class="number">1</span>, k), <span class="string">&quot;float32&quot;</span>)</span><br><span class="line">    words, distance = vq(des, voc)</span><br><span class="line">    <span class="keyword">for</span> w <span class="keyword">in</span> words:</span><br><span class="line">        test_features[<span class="number">0</span>][w] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    test_features = test_features * idf</span><br><span class="line">    tf = test_features / np.<span class="built_in">sum</span>(test_features, axis=<span class="number">1</span>)</span><br><span class="line">    test_features = test_features * tf</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Scale the features</span></span><br><span class="line">    test_features = std_slr.transform(test_features)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Perform the predictions</span></span><br><span class="line">    predictions = [classes_names[i] <span class="keyword">for</span> i <span class="keyword">in</span> clf.predict(test_features)]</span><br><span class="line">    <span class="keyword">return</span> predictions</span><br></pre></td></tr></table></figure><br>读取测试数据，并输出结果<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">test_path</span>):</span><br><span class="line">    _, image_paths, _ = read_paths(test_path)</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> image_path <span class="keyword">in</span> image_paths:</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">        predictions = predict_image(image_path)</span><br><span class="line">        img = cv2.imread(image_path)</span><br><span class="line">        img = cv2.resize(img, (<span class="built_in">int</span>(img.shape[<span class="number">1</span>]*<span class="number">2</span>), <span class="built_in">int</span>(img.shape[<span class="number">0</span>] * <span class="number">2</span>))) <span class="comment">#图片扩大两倍</span></span><br><span class="line">        output=cv2.putText(img, predictions[<span class="number">0</span>], (<span class="number">10</span>, <span class="number">150</span>), cv2.FONT_HERSHEY_COMPLEX, <span class="number">2.0</span>, (<span class="number">100</span>, <span class="number">200</span>, <span class="number">200</span>), <span class="number">5</span>)</span><br><span class="line">        cv2.imshow(image_path, output)</span><br><span class="line">        cv2.waitKey(<span class="number">0</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;image%d: %s, classes : %s&quot;</span> % (i, image_path, predictions))</span><br></pre></td></tr></table></figure><br><img src="/2019/07/07/BOF/result.png" alt="r"><br><img src="/2019/07/07/BOF/7.png" alt="7"></p>
+</blockquote>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sklearn.externals</span><br><span class="line"><span class="keyword">from</span> imutils <span class="keyword">import</span> paths</span><br><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> LinearSVC</span><br><span class="line"><span class="keyword">from</span> scipy.cluster.vq <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_paths</span>(<span class="params">path</span>):</span><br><span class="line">    <span class="comment"># 获取训练数据类别</span></span><br><span class="line">    training_names = os.listdir(path)</span><br><span class="line">    <span class="comment"># 获取图片路径及标签</span></span><br><span class="line">    image_paths = [] <span class="comment"># 获取所有图片路径</span></span><br><span class="line">    image_classes = [] <span class="comment">#记录每张图片的标签，[0,...,0,1,...,1,2,...,2]</span></span><br><span class="line">    class_id = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> training_name <span class="keyword">in</span> training_names:</span><br><span class="line">        name = os.path.join(path, training_name)</span><br><span class="line">        class_path = <span class="built_in">list</span>(paths.list_images(name))</span><br><span class="line">        image_paths += class_path</span><br><span class="line">        image_classes += [class_id] * <span class="built_in">len</span>(class_path)</span><br><span class="line">        class_id += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Label \t\t  count&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;---------------------&quot;</span>)</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> training_name <span class="keyword">in</span> training_names:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;&#123;0:10&#125; &#123;1:6d&#125;&#x27;</span>.<span class="built_in">format</span>(training_name, image_classes.count(i)))</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> training_names, image_paths, image_classes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">train_path</span>):</span><br><span class="line">    training_names, image_paths, image_classes = read_paths(train_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建SIFT特征提取器</span></span><br><span class="line">    sift = cv2.xfeatures2d.SIFT_create()</span><br><span class="line">    <span class="comment"># 特征提取与描述子生成</span></span><br><span class="line">    des_list = []</span><br><span class="line">    <span class="keyword">for</span> image_path <span class="keyword">in</span> image_paths:</span><br><span class="line">        im = cv2.imread(image_path)</span><br><span class="line">        kpts, des = sift.detectAndCompute(im, <span class="literal">None</span>)</span><br><span class="line">        des_list.append(des)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 描述子向量</span></span><br><span class="line">    descriptors = des_list[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> descriptor <span class="keyword">in</span> des_list[<span class="number">1</span>:]:</span><br><span class="line">        descriptors = np.vstack((descriptors, descriptor))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 100 聚类 K-Means</span></span><br><span class="line">    k = <span class="number">100</span></span><br><span class="line">    voc, _ = kmeans(descriptors, k, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成特征直方图</span></span><br><span class="line">    im_features = np.zeros((<span class="built_in">len</span>(image_paths), k), <span class="string">&quot;float32&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(image_paths)):</span><br><span class="line">        words, distance = vq(des_list[i], voc)</span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> words:</span><br><span class="line">            im_features[i][w] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># TF-IDF</span></span><br><span class="line">    nbr = np.<span class="built_in">sum</span>((im_features &gt; <span class="number">0</span>) * <span class="number">1</span>, axis=<span class="number">0</span>)</span><br><span class="line">    idf = np.array(np.log((<span class="number">1.0</span> * <span class="built_in">len</span>(image_paths) + <span class="number">1</span>) / (<span class="number">1.0</span> * nbr + <span class="number">1</span>)), <span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">    im_features = im_features * idf</span><br><span class="line">    tf = np.zeros((<span class="built_in">len</span>(image_paths), k), <span class="string">&quot;float32&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(image_paths)):</span><br><span class="line">        tf[i] = im_features[i] / (np.<span class="built_in">sum</span>(im_features, axis=<span class="number">1</span>)[i])</span><br><span class="line">        im_features[i] = im_features[i] * tf[i]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 尺度化</span></span><br><span class="line">    std_slr = StandardScaler().fit(im_features)</span><br><span class="line">    im_features = std_slr.transform(im_features)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># SVM</span></span><br><span class="line">    clf = LinearSVC()</span><br><span class="line">    clf.fit(im_features, np.array(image_classes))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Save the SVM</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;training and save model...&quot;</span>)</span><br><span class="line">    sklearn.externals.joblib.dump((clf, training_names, std_slr, k, voc, idf), <span class="string">&quot;bof.pkl&quot;</span>, compress=<span class="number">3</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;========================================&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">predict_image</span>(<span class="params">image_path</span>):</span><br><span class="line"></span><br><span class="line">    clf, classes_names, std_slr, k, voc, idf = sklearn.externals.joblib.load(<span class="string">&quot;bof.pkl&quot;</span>)</span><br><span class="line"></span><br><span class="line">    sift = cv2.xfeatures2d.SIFT_create()</span><br><span class="line">    im = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)</span><br><span class="line">    kpts, des = sift.detectAndCompute(im, <span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">    test_features = np.zeros((<span class="number">1</span>, k), <span class="string">&quot;float32&quot;</span>)</span><br><span class="line">    words, distance = vq(des, voc)</span><br><span class="line">    <span class="keyword">for</span> w <span class="keyword">in</span> words:</span><br><span class="line">        test_features[<span class="number">0</span>][w] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    test_features = test_features * idf</span><br><span class="line">    tf = test_features / np.<span class="built_in">sum</span>(test_features, axis=<span class="number">1</span>)</span><br><span class="line">    test_features = test_features * tf</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Scale the features</span></span><br><span class="line">    test_features = std_slr.transform(test_features)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Perform the predictions</span></span><br><span class="line">    predictions = [classes_names[i] <span class="keyword">for</span> i <span class="keyword">in</span> clf.predict(test_features)]</span><br><span class="line">    <span class="keyword">return</span> predictions</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">test_path</span>):</span><br><span class="line">    _, image_paths, _ = read_paths(test_path)</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> image_path <span class="keyword">in</span> image_paths:</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">        predictions = predict_image(image_path)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;image%d: %s, classes : %s&quot;</span> % (i, image_path, predictions))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    train_path = <span class="string">&quot;C:/Code/Picture/dataset/train/&quot;</span></span><br><span class="line">    train(train_path)</span><br><span class="line"></span><br><span class="line">    test_path = <span class="string">&quot;C:/Code/Picture/dataset/test/&quot;</span></span><br><span class="line">    test(test_path)</span><br></pre></td></tr></table></figure>
+<h1 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h1><ol>
+<li>字典大小的选择也是问题，字典过大，单词缺乏一般性，对噪声敏感，计算量大，关键是图象投影后的维数高；字典太小，单词区分性能差，对相似的目标特征无法表示。</li>
+<li>这种一个特征点对应于一个词的方法显然忽略图像空间上下文，这很容易造成词语义的模糊。</li>
+<li>图像中一般都存在同主题无关的内容，会影响分类的结果，改进方法是检测兴趣区域并给不同的权重。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/BOF/" rel="tag"># BOF</a>
+              <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+              <a href="/tags/SIFT/" rel="tag"># SIFT</a>
+              <a href="/tags/Kmeans/" rel="tag"># Kmeans</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/28/%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97/" rel="prev" title="Math|距离计算">
+                  <i class="fa fa-angle-left"></i> Math|距离计算
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/02/28/%E4%BA%8C%E7%BB%B4%E7%A0%81/" rel="next" title="Python|一行代码生成二维码">
+                  Python|一行代码生成二维码 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mengqiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '32px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+</body>
+</html>

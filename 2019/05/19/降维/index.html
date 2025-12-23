@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"vs2015"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="以Iris数据集为例，分别实现PCA和LDA降维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python|降维算法PCA和LDA的实现及总结">
+<meta property="og:url" content="http://example.com/2019/05/19/%E9%99%8D%E7%BB%B4/index.html">
+<meta property="og:site_name" content="Mencia&#39;s Blog">
+<meta property="og:description" content="以Iris数据集为例，分别实现PCA和LDA降维">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2019/05/19/%E9%99%8D%E7%BB%B4/1.jpg">
+<meta property="og:image" content="http://example.com/2019/05/19/%E9%99%8D%E7%BB%B4/3.png">
+<meta property="og:image" content="http://example.com/2019/05/19/%E9%99%8D%E7%BB%B4/4.png">
+<meta property="article:published_time" content="2019-05-19T13:36:57.000Z">
+<meta property="article:modified_time" content="2025-07-14T16:00:56.000Z">
+<meta property="article:author" content="Mengqiu">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="PCA">
+<meta property="article:tag" content="LDA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2019/05/19/%E9%99%8D%E7%BB%B4/1.jpg">
+
+
+<link rel="canonical" href="http://example.com/2019/05/19/%E9%99%8D%E7%BB%B4/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/05/19/%E9%99%8D%E7%BB%B4/","path":"2019/05/19/降维/","title":"Python|降维算法PCA和LDA的实现及总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Python|降维算法PCA和LDA的实现及总结 | Mencia's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mencia's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PCA"><span class="nav-number">1.</span> <span class="nav-text">PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">算法原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">1.3.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LDA"><span class="nav-number">2.</span> <span class="nav-text">LDA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-1"><span class="nav-number">2.1.</span> <span class="nav-text">算法原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-1"><span class="nav-number">2.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C-1"><span class="nav-number">2.3.</span> <span class="nav-text">结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">代码</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Mengqiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/05/19/%E9%99%8D%E7%BB%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mengqiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mencia's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Python|降维算法PCA和LDA的实现及总结 | Mencia's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python|降维算法PCA和LDA的实现及总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-05-19 21:36:57" itemprop="dateCreated datePublished" datetime="2019-05-19T21:36:57+08:00">2019-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-07-15 00:00:56" itemprop="dateModified" datetime="2025-07-15T00:00:56+08:00">2025-07-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>以Iris数据集为例，分别实现PCA和LDA降维</strong><br><span id="more"></span></p>
+<h1 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h1><h2 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h2><p>主成分分析（Principal Component Analysis，PCA）是一种常用的线性降维数据分析方法，其实质是在能尽可能好的代表原特征的情况下，将原特征进行线性变换、映射至低纬度空间中。</p>
+<blockquote>
+<p>至于更详细的的可以看下面的<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_16137569/article/details/82142668">PCA原理小结</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/a8039974/article/details/81285238">PCA(主成分分析)详解</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhongkelee/article/details/44064401">主成分分析（PCA）原理详解</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/Eastmount/article/details/53285192">PCA降维操作</a></p>
+</blockquote>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><p>首先将数据做中心化处理<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">meanVal = np.mean(X, axis=<span class="number">0</span>)</span><br><span class="line">W = X - meanVal</span><br></pre></td></tr></table></figure><br>这里说一下，中心化就是使得样本矩阵的中心回归到坐标系的原点，看下图应该比较好理解。也可以点<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/37069477/answer/132736027">这里</a>更详细。<br><img src="/2019/05/19/%E9%99%8D%E7%BB%B4/1.jpg" alt="zx"></p>
+<p>计算中心化后数据的协方差矩阵<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">covMat = np.cov(W, rowvar=<span class="number">0</span>)</span><br></pre></td></tr></table></figure><br>计算协方差矩阵的特征值和特征向量<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eigVals, eigVects = np.linalg.eig(np.mat(covMat))</span><br></pre></td></tr></table></figure><br>找出特征值最大的k个特征所对应的特征向量，并组成向量T<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E = np.argsort(eigVals)</span><br><span class="line">k_E = E[:-(k + <span class="number">1</span>):-<span class="number">1</span>]</span><br><span class="line">T = eigVects[:, k_E]</span><br></pre></td></tr></table></figure><br>Y=W*T即为降维到k维后的数据<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Y</span> <span class="operator">=</span> W * T</span><br></pre></td></tr></table></figure></p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>PCA算法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">MyPca</span>(<span class="params">X,k</span>):</span><br><span class="line"></span><br><span class="line">    meanVal = np.mean(X, axis=<span class="number">0</span>)</span><br><span class="line">    W = X - meanVal</span><br><span class="line"></span><br><span class="line">    covMat = np.cov(W, rowvar=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    eigVals, eigVects = np.linalg.eig(np.mat(covMat))</span><br><span class="line"></span><br><span class="line">    E = np.argsort(eigVals)</span><br><span class="line">    k_E = E[:-(k + <span class="number">1</span>):-<span class="number">1</span>]</span><br><span class="line">    T = eigVects[:, k_E]</span><br><span class="line"></span><br><span class="line">    Y = W * T</span><br><span class="line">    <span class="keyword">return</span> Y</span><br></pre></td></tr></table></figure><br>带入Iris数据集<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data = load_iris()</span><br><span class="line">y = data.target <span class="comment">#标签</span></span><br><span class="line">X = data.data</span><br></pre></td></tr></table></figure><br>带入数据，输出结果<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reduced_X = np.array(MyPca(X, <span class="number">2</span>))</span><br><span class="line">show2(reduced_X)</span><br></pre></td></tr></table></figure><br><img src="/2019/05/19/%E9%99%8D%E7%BB%B4/3.png" alt="pca"></p>
+<h1 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h1><h2 id="算法原理-1"><a href="#算法原理-1" class="headerlink" title="算法原理"></a>算法原理</h2><p>线性判别分析(linear discriminant analysis，LDA)是是一种监督学习的降维技术，投影后希望类内方差最小，类间方差最大，即每一种类别数据的投影点尽可能的接近，而不同类别的数据的类别中心之间的距离尽可能的大。</p>
+<blockquote>
+<p>这里推荐几篇文章，有更详细的数学推导<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jerrylead/archive/2011/04/21/2024384.html">线性判别分析（Linear Discriminant Analysis）（一）</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jerrylead/archive/2011/04/21/2024389.html">线性判别分析（Linear Discriminant Analysis）（二）</a></p>
+</blockquote>
+<h2 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a>算法实现</h2><p>首先将数据根据标签分类<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yi = <span class="built_in">set</span>(y)</span><br><span class="line">xi = np.array([X[np.where(y == i)] <span class="keyword">for</span> i <span class="keyword">in</span> yi])</span><br></pre></td></tr></table></figure><br>计算所有样本均值$\mu=\frac{1}{m}\sum\limits<em>{i=1}^m$和各类样本均值$\mu_i=\frac{1}{n_i}\sum\limits</em>{x\in x<em>i}x$<br>其中$m$表示总样本数，$n_i$表示第i类的样本数。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">u = np.array([np.mean(X, axis=<span class="number">0</span>)])</span><br><span class="line">ui = np.array([np.mean(xi[i], axis=<span class="number">0</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(xi.shape[<span class="number">0</span>])])</span><br></pre></td></tr></table></figure><br>计算类内散度矩阵$S_w=\sum\limits</em>{i=1}^c\sum\limits<em>{x\in x_i}(x-\mu_i)(x-\mu_i)^T$<br>及类间散度矩阵$S_b=\sum\limits</em>{i=1}^cn_i(\mu_i-\mu)(\mu_i-\mu)^T$<br>其中$c$表示类别数。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Sw = <span class="built_in">sum</span>(np.dot((xi[i] - ui[i]).T, (xi[i] - ui[i])) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(yi)))</span><br><span class="line">Sb = <span class="built_in">sum</span>(<span class="built_in">len</span>(xi[i]) * (ui[i].reshape(<span class="number">1</span>, <span class="number">4</span>) - u).T * (ui[i].reshape(<span class="number">1</span>, <span class="number">4</span>) - u) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(yi)))</span><br></pre></td></tr></table></figure><br>计算$S_w^{-1}S_b$(由于$S_b$的秩最大为$c-1$，所以LDA最大只能降到$c-1$的维度)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">S=np.linalg.inv(Sw).dot(Sb)</span><br><span class="line">r=np.linalg.matrix_rank(S)</span><br><span class="line"><span class="keyword">if</span>(k&gt;r):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;k_max=&quot;</span>,r)</span><br><span class="line">    k=r</span><br></pre></td></tr></table></figure><br>找出特征值最大的k个特征所对应的特征向量，并组成向量$W$，$Y=W*X$即为降维到k维后的数据<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">eigVals, eigVects = np.linalg.eig(S)</span><br><span class="line">E = np.argsort(eigVals)</span><br><span class="line">k_E = E[:-(k + <span class="number">1</span>):-<span class="number">1</span>]</span><br><span class="line">W = eigVects[:, k_E]</span><br><span class="line">Y=np.dot(X, W)</span><br></pre></td></tr></table></figure></p>
+<h2 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h2><p>LDA算法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">MyLDA</span>(<span class="params">X,y,k</span>):</span><br><span class="line">    yi = <span class="built_in">set</span>(y)</span><br><span class="line">    xi = np.array([X[np.where(y == i)] <span class="keyword">for</span> i <span class="keyword">in</span> yi])</span><br><span class="line"></span><br><span class="line">    u = np.array([np.mean(X, axis=<span class="number">0</span>)])</span><br><span class="line">    ui = np.array([np.mean(xi[i], axis=<span class="number">0</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(xi.shape[<span class="number">0</span>])])</span><br><span class="line"></span><br><span class="line">    Sw = <span class="built_in">sum</span>(np.dot((xi[i] - ui[i]).T, (xi[i] - ui[i]))</span><br><span class="line">             <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(yi)))</span><br><span class="line">    Sb = <span class="built_in">sum</span>(<span class="built_in">len</span>(xi[i]) * (ui[i].reshape(<span class="number">1</span>, <span class="number">4</span>) - u).T * (ui[i].reshape(<span class="number">1</span>, <span class="number">4</span>) - u)</span><br><span class="line">             <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(yi)))</span><br><span class="line"></span><br><span class="line">    S=np.linalg.inv(Sw).dot(Sb)</span><br><span class="line">    r=np.linalg.matrix_rank(S)</span><br><span class="line">    <span class="keyword">if</span>(k&gt;r):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;k_max=&quot;</span>,r)</span><br><span class="line">        k=r</span><br><span class="line"></span><br><span class="line">    eigVals, eigVects = np.linalg.eig(S)</span><br><span class="line">    E = np.argsort(eigVals)</span><br><span class="line">    k_E = E[:-(k + <span class="number">1</span>):-<span class="number">1</span>]</span><br><span class="line">    W = eigVects[:, k_E]</span><br><span class="line"></span><br><span class="line">    Y=np.dot(X, W)</span><br><span class="line">    <span class="keyword">return</span> Y</span><br></pre></td></tr></table></figure><br>带入数据，输出结果<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LDA_2D = np.array(MyLDA(X,y,<span class="number">2</span>))</span><br><span class="line">show2(LDA_2D)</span><br></pre></td></tr></table></figure><br><img src="/2019/05/19/%E9%99%8D%E7%BB%B4/4.png" alt="lda"></p>
+<p>这样就将数据降到二维，但可能有人会疑惑，怎么知道降维后的信息量变化了多少呢？可以用这样的计算方法: $\eta<em>k=\frac{\sum</em>{j=1}^k\lambda<em>j}{\sum</em>{j=1}^k\lambda_j}$来表示降维后剩余的信息量</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总的来说，PCA和LDA的实现很简单，但是基本原理和推导需要扎实的数学基础，尤其是LDA中，尤其要注意矩阵的秩对结果的影响。PCA和LDA虽然都用到数据降维的思想，但是两者有着很大的不同，首先监督方式不一样，LDA是有监督的降维方法，而PCA是无监督的降维方法；再者目的也不一样，PCA是为了去除原始数据集中冗余的维度，让投影子空间的各个维度的方差尽可能大。而LDA是通过数据降维使得原始数据中不同的类别尽可能区分开来。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d <span class="keyword">import</span> Axes3D</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">MyPCA</span>(<span class="params">X,k</span>):</span><br><span class="line"></span><br><span class="line">    meanVal = np.mean(X, axis=<span class="number">0</span>)</span><br><span class="line">    W = X - meanVal</span><br><span class="line"></span><br><span class="line">    covMat = np.cov(W, rowvar=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    eigVals, eigVects = np.linalg.eig(np.mat(covMat))</span><br><span class="line"></span><br><span class="line">    E = np.argsort(eigVals)</span><br><span class="line">    k_E = E[:-(k + <span class="number">1</span>):-<span class="number">1</span>]</span><br><span class="line">    T = eigVects[:, k_E]</span><br><span class="line"></span><br><span class="line">    n = <span class="built_in">sum</span>(eigVals[k_E])/<span class="built_in">sum</span>(eigVals)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;降到&quot;</span>,k,<span class="string">&quot;维后保留的信息量是原来的&quot;</span>,n * <span class="number">100.0</span>, <span class="string">&quot;%&quot;</span>)</span><br><span class="line"></span><br><span class="line">    Y = W * T</span><br><span class="line">    <span class="keyword">return</span> Y</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">MyLDA</span>(<span class="params">X,y,k</span>):</span><br><span class="line">    yi = <span class="built_in">set</span>(y)</span><br><span class="line">    xi = np.array([X[np.where(y == i)] <span class="keyword">for</span> i <span class="keyword">in</span> yi])</span><br><span class="line"></span><br><span class="line">    u = np.array([np.mean(X, axis=<span class="number">0</span>)])</span><br><span class="line">    ui = np.array([np.mean(xi[i], axis=<span class="number">0</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(xi.shape[<span class="number">0</span>])])</span><br><span class="line"></span><br><span class="line">    Sw = <span class="built_in">sum</span>(np.dot((xi[i] - ui[i]).T, (xi[i] - ui[i]))</span><br><span class="line">             <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(yi)))</span><br><span class="line">    Sb = <span class="built_in">sum</span>(<span class="built_in">len</span>(xi[i]) * (ui[i].reshape(<span class="number">1</span>, <span class="number">4</span>) - u).T * (ui[i].reshape(<span class="number">1</span>, <span class="number">4</span>) - u)</span><br><span class="line">             <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(yi)))</span><br><span class="line"></span><br><span class="line">    S=np.linalg.inv(Sw).dot(Sb)</span><br><span class="line">    r=np.linalg.matrix_rank(S)</span><br><span class="line">    <span class="keyword">if</span>(k&gt;r):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;k_max=&quot;</span>,r)</span><br><span class="line">        k=r</span><br><span class="line"></span><br><span class="line">    eigVals, eigVects = np.linalg.eig(S)</span><br><span class="line">    E = np.argsort(eigVals)</span><br><span class="line">    k_E = E[:-(k + <span class="number">1</span>):-<span class="number">1</span>]</span><br><span class="line">    W = eigVects[:, k_E]</span><br><span class="line"></span><br><span class="line">    n = <span class="built_in">sum</span>(eigVals[k_E]) / <span class="built_in">sum</span>(eigVals)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;降到&quot;</span>, k, <span class="string">&quot;维后保留的信息量是原来的&quot;</span>, n * <span class="number">100.0</span>, <span class="string">&quot;%&quot;</span>)</span><br><span class="line"></span><br><span class="line">    Y=np.dot(X, W)</span><br><span class="line">    <span class="keyword">return</span> Y</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show2</span>(<span class="params">reduced_X</span>):</span><br><span class="line">    red_x, red_y = [], []</span><br><span class="line">    blue_x, blue_y = [], []</span><br><span class="line">    green_x, green_y = [], []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(reduced_X)):</span><br><span class="line">        <span class="keyword">if</span> y[i] == <span class="number">0</span>:</span><br><span class="line">            red_x.append(reduced_X[i][<span class="number">0</span>])</span><br><span class="line">            red_y.append(reduced_X[i][<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">elif</span> y[i] == <span class="number">1</span>:</span><br><span class="line">            blue_x.append(reduced_X[i][<span class="number">0</span>])</span><br><span class="line">            blue_y.append(reduced_X[i][<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            green_x.append(reduced_X[i][<span class="number">0</span>])</span><br><span class="line">            green_y.append(reduced_X[i][<span class="number">1</span>])</span><br><span class="line">    plt.scatter(red_x, red_y, c=<span class="string">&#x27;r&#x27;</span>, marker=<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">    plt.scatter(blue_x, blue_y, c=<span class="string">&#x27;b&#x27;</span>, marker=<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">    plt.scatter(green_x, green_y, c=<span class="string">&#x27;g&#x27;</span>, marker=<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">    <span class="comment"># plt.show()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show3</span>(<span class="params">X</span>):</span><br><span class="line">    red_x, red_y, red_z = [], [], []</span><br><span class="line">    blue_x, blue_y, blue_z = [], [], []</span><br><span class="line">    green_x, green_y, green_z = [], [], []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(X)):</span><br><span class="line">        <span class="keyword">if</span> y[i] == <span class="number">0</span>:</span><br><span class="line">            red_x.append(X[i][<span class="number">0</span>])</span><br><span class="line">            red_y.append(X[i][<span class="number">1</span>])</span><br><span class="line">            red_z.append(X[i][<span class="number">2</span>])</span><br><span class="line">        <span class="keyword">elif</span> y[i] == <span class="number">1</span>:</span><br><span class="line">            blue_x.append(X[i][<span class="number">0</span>])</span><br><span class="line">            blue_y.append(X[i][<span class="number">1</span>])</span><br><span class="line">            blue_z.append(X[i][<span class="number">2</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            green_x.append(X[i][<span class="number">0</span>])</span><br><span class="line">            green_y.append(X[i][<span class="number">1</span>])</span><br><span class="line">            green_z.append(X[i][<span class="number">2</span>])</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.gca(projection=<span class="string">&#x27;3d&#x27;</span>)</span><br><span class="line">    ax.scatter(red_x, red_y, red_z, c=<span class="string">&#x27;r&#x27;</span>, marker=<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">    ax.scatter(blue_x, blue_y, blue_z, c=<span class="string">&#x27;b&#x27;</span>, marker=<span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">    ax.scatter(green_x, green_y, green_z, c=<span class="string">&#x27;g&#x27;</span>, marker=<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">    <span class="comment"># plt.show()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    data = load_iris()</span><br><span class="line">    y = data.target</span><br><span class="line">    X = data.data</span><br><span class="line"></span><br><span class="line">    <span class="comment">#PCA</span></span><br><span class="line">    <span class="comment">#降到2维</span></span><br><span class="line">    PCA_2D = np.array(MyPCA(X, <span class="number">2</span>))</span><br><span class="line">    show2(PCA_2D)</span><br><span class="line">    <span class="comment"># 降到3维</span></span><br><span class="line">    PCA_3D = np.array(MyPCA(X, <span class="number">3</span>))</span><br><span class="line">    show3(PCA_3D)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line">    <span class="comment">#LDA</span></span><br><span class="line">    <span class="comment"># 降到2维</span></span><br><span class="line">    LDA_2D = np.array(MyLDA(X,y,<span class="number">2</span>))</span><br><span class="line">    show2(LDA_2D)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p><strong>如有错误，欢迎指正；如果有更好的，欢迎分享。</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/PCA/" rel="tag"># PCA</a>
+              <a href="/tags/LDA/" rel="tag"># LDA</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/05/19/Hexo%E5%91%BD%E4%BB%A4/" rel="prev" title="Hexo|用Hexo写博客">
+                  <i class="fa fa-angle-left"></i> Hexo|用Hexo写博客
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/05/20/docker/" rel="next" title="Docker|Docker的安装及简单使用">
+                  Docker|Docker的安装及简单使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mengqiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '32px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+</body>
+</html>

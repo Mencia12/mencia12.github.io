@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"vs2015"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="机器学习常用距离计算总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Math|距离计算">
+<meta property="og:url" content="http://example.com/2019/06/28/%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97/index.html">
+<meta property="og:site_name" content="Mencia&#39;s Blog">
+<meta property="og:description" content="机器学习常用距离计算总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-28T04:27:09.000Z">
+<meta property="article:modified_time" content="2025-12-22T08:56:28.243Z">
+<meta property="article:author" content="Mengqiu">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/06/28/%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/06/28/%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97/","path":"2019/06/28/距离计算/","title":"Math|距离计算"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Math|距离计算 | Mencia's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mencia's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB"><span class="nav-number">1.</span> <span class="nav-text">曼哈顿距离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E8%B7%9D%E7%A6%BB"><span class="nav-number">2.</span> <span class="nav-text">欧几里得距离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB"><span class="nav-number">3.</span> <span class="nav-text">切比雪夫距离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%B5%E5%8F%AF%E5%A4%AB%E6%96%AF%E5%9F%BA%E8%B7%9D%E7%A6%BB"><span class="nav-number">4.</span> <span class="nav-text">闵可夫斯基距离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%AC%E6%B0%8F%E8%B7%9D%E7%A6%BB"><span class="nav-number">5.</span> <span class="nav-text">马氏距离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB"><span class="nav-number">6.</span> <span class="nav-text">汉明距离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%99%E5%BC%A6%E7%9B%B8%E4%BC%BC%E5%BA%A6"><span class="nav-number">7.</span> <span class="nav-text">余弦相似度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%B0%E5%8D%A1%E5%BE%B7%E8%B7%9D%E7%A6%BB"><span class="nav-number">8.</span> <span class="nav-text">杰卡德距离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9A%AE%E5%B0%94%E6%A3%AE%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0"><span class="nav-number">9.</span> <span class="nav-text">皮尔森相关系数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB"><span class="nav-number">10.</span> <span class="nav-text">编辑距离</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#K-L%E6%95%A3%E5%BA%A6"><span class="nav-number">11.</span> <span class="nav-text">K-L散度</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Mengqiu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/28/%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Mengqiu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mencia's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Math|距离计算 | Mencia's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Math|距离计算
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-06-28 12:27:09" itemprop="dateCreated datePublished" datetime="2019-06-28T12:27:09+08:00">2019-06-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-22 16:56:28" itemprop="dateModified" datetime="2025-12-22T16:56:28+08:00">2025-12-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>机器学习常用距离计算总结</strong><br><span id="more"></span></p>
+<h1 id="曼哈顿距离"><a href="#曼哈顿距离" class="headerlink" title="曼哈顿距离"></a>曼哈顿距离</h1><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB">曼哈顿距离</a>（Manhattan Distance）又称计程车几何距离或方格线距离，是由十九世纪的赫尔曼·闵可夫斯基所创词汇 ，为欧几里得几何度量空间的几何学之用语，用以标明两个点上在标准坐标系上的绝对轴距之总和。曼哈顿距离的正式意义为L1-距离或城市区块距离，也就是在欧几里得空间的固定直角坐标系上两点所形成的线段对轴产生的投影的距离总和。曼哈顿距离公式为</p>
+<script type="math/tex; mode=display">d=\sum_{i=1}^n|x_i-y_i|</script><h1 id="欧几里得距离"><a href="#欧几里得距离" class="headerlink" title="欧几里得距离"></a>欧几里得距离</h1><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E5%BA%A6%E9%87%8F/1274107?fromtitle=%E6%AC%A7%E6%B0%8F%E8%B7%9D%E7%A6%BB&amp;fromid=1798948">欧几里得度量</a>（Euclidean Distance）也称欧氏距离： 在数学中，欧几里得距离或欧几里得度量是欧几里得空间中两点间“普通”（即直线）距离。在欧几里得空间中，点$x=\left(x<em>{1}, x</em>{2}, \ldots, x<em>{n}\right)$和$y=\left(y</em>{1}, y<em>{2}, \ldots, y</em>{n}\right)$之间的欧氏距离为:</p>
+<script type="math/tex; mode=display">d=\sqrt{\sum_{i=1}^{n}\left(x_{i}-y_{i}\right)^{2}}</script><h1 id="切比雪夫距离"><a href="#切比雪夫距离" class="headerlink" title="切比雪夫距离"></a>切比雪夫距离</h1><p>数学上，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB">切比雪夫距离</a>（Chebyshev distance）或是$L_{\infty}$度量是向量空间中的一种度量，二个点之间的距离定义为其各座标数值差的最大值。以p(x1,y1)和q(x2,y2)二点为例，其切比雪夫距离为：</p>
+<script type="math/tex; mode=display">D_{\text {Chebyshev}}(p, q)=\max \left(\left|x_{2}-x_{1}\right|,\left|y_{2}-y_{1}\right|\right)</script><p>一般形式为：</p>
+<script type="math/tex; mode=display">D_{\text { Chebyshev }}(p, q)=\max _{i}\left(\left|p_{i}-q_{i}\right|\right)=\lim _{k \rightarrow \infty}\left(\sum_{i=1}^{n}\left|p_{i}-q_{i}\right|^{k}\right)^{1 / k}</script><h1 id="闵可夫斯基距离"><a href="#闵可夫斯基距离" class="headerlink" title="闵可夫斯基距离"></a>闵可夫斯基距离</h1><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%98%8E%E5%8F%AF%E5%A4%AB%E6%96%AF%E5%9F%BA%E8%B7%9D%E7%A6%BB/10515232">闵可夫斯基距离</a>或闵氏距离（Minkowski Distance）：以俄罗斯数学家闵可夫斯基命名的距离；是欧式距离的推广，闵氏距离不是一种距离，而是一组距离的定义。其定义如下：</p>
+<script type="math/tex; mode=display">d=\sqrt[p]{\sum_{i=1}^{n}\left|x_{i}-y_{i}\right|^{p}}</script><p>从上面公式可以看出：<br>当$p=1$时，就是曼哈顿距离<br>当$p=2$时，就是欧氏距离<br>当$p \rightarrow \infty$时，就是切比雪夫距离</p>
+<h1 id="马氏距离"><a href="#马氏距离" class="headerlink" title="马氏距离"></a>马氏距离</h1><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%A9%AC%E6%B0%8F%E8%B7%9D%E7%A6%BB">马氏距离</a>(Mahalanobis distance)： 由印度统计学家马哈拉诺比斯提出，表示数据的协方差距离。它是一种有效的计算两个未知样本集的相似度的方法。与欧氏距离不同的是它考虑到各种特性之间的联系（例如：一条关于身高的信息会带来一条关于体重的信息，因为两者是有关联的）并且是尺度无关的(scale-invariant)，即独立于测量尺度，如果协方差矩阵为单位矩阵，马氏距离就简化为欧式距离，如果协方差矩阵为对角阵，其也可称为正规化的马氏距离。 计算公式如下：</p>
+<script type="math/tex; mode=display">D_{M}(x)=\sqrt{(x-\mu)^{T} \Sigma^{-1}(x-\mu)}</script><p>马氏距离也可以定义为两个服从同一分布并且其协方差矩阵为$\Sigma$的随机变量$\vec{x}$与$\vec{y}$的差异程度：</p>
+<script type="math/tex; mode=display">d(\vec{x}, \vec{y})=\sqrt{(\vec{x}-\vec{y})^{T} \Sigma^{-1}(\vec{x}-\vec{y})}</script><h1 id="汉明距离"><a href="#汉明距离" class="headerlink" title="汉明距离"></a>汉明距离</h1><p>在信息论中，两个等长字符串之间的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB/475174?fr=aladdin">汉明距离</a>（Hamming distance）是两个字符串对应位置的不同字符的个数。换句话说，它就是将一个字符串变换成另外一个字符串所需要替换的字符个数。</p>
+<blockquote>
+<p>1011101 与 1001001 之间的汉明距离是 2。<br>2143896 与 2233796 之间的汉明距离是 3。<br>“toned” 与 “roses” 之间的汉明距离是 3。</p>
+</blockquote>
+<h1 id="余弦相似度"><a href="#余弦相似度" class="headerlink" title="余弦相似度"></a>余弦相似度</h1><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BD%99%E5%BC%A6%E7%9B%B8%E4%BC%BC%E5%BA%A6/17509249?fr=aladdin">余弦相似度</a>通过测量两个向量的夹角的余弦值来度量它们之间的相似性。0度角的余弦值是1，而其他任何角度的余弦值都不大于1；并且其最小值是-1。从而两个向量之间的角度的余弦值确定两个向量是否大致指向相同的方向。两个向量有相同的指向时，余弦相似度的值为1；两个向量夹角为90°时，余弦相似度的值为0；两个向量指向完全相反的方向时，余弦相似度的值为-1。这结果是与向量的长度无关的，仅仅与向量的指向方向相关。余弦相似度通常用于正空间，因此给出的值为0到1之间。给定两个属性向量，A和B，其余弦相似性θ由点积和向量长度给出，如下所示：</p>
+<script type="math/tex; mode=display">\cos \theta=\frac{A \cdot B}{\|A\|\|B\|}=\frac{\sum_{i=1}^{n} A_{i} \times B_{i}}{\sqrt{\sum_{i=1}^{n}\left(A_{i}\right)^{2}} \times \sqrt{\sum_{i=1}^{n}\left(B_{i}\right)^{2}}}</script><h1 id="杰卡德距离"><a href="#杰卡德距离" class="headerlink" title="杰卡德距离"></a>杰卡德距离</h1><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%9D%B0%E5%8D%A1%E5%BE%B7%E8%B7%9D%E7%A6%BB/15416212?fr=aladdin">杰卡德距离</a>(Jaccard Distance) ：它是杰卡德相似系数的补集，被定义为1减去Jaccard相似系数。而杰卡德相似系数(Jaccard similarity coefficient)，也称杰卡德指数(Jaccard Index)，是用来衡量两个集合相似度的一种指标。<br>Jaccard相似指数用来度量两个集合之间的相似性，它被定义为两个集合交集的元素个数除以并集的元素个数。</p>
+<script type="math/tex; mode=display">J(A, B)=\frac{|A \cap B|}{|A \cup B|}</script><p>杰卡德距离如下：</p>
+<script type="math/tex; mode=display">d_{J}(A, B)=1-J(A, B)=\frac{|A \cup B|-|A \cap B|}{|A \cup B|}</script><p>性质：<br>1）若$A、B$两个集合都为空，则$J(A,B)=1$<br>2）$0 \leq J(A, B) \leq 1$</p>
+<h1 id="皮尔森相关系数"><a href="#皮尔森相关系数" class="headerlink" title="皮尔森相关系数"></a>皮尔森相关系数</h1><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%9A%AE%E5%B0%94%E6%A3%AE%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/4222137?fr=aladdin">皮尔森相关系数</a>（Pearson correlation coefficient）：也称皮尔森积矩相关系数(Pearson product-moment correlation coefficient) ，是一种线性相关系数。皮尔森相关系数是用来反映两个变量线性相关程度的统计量。相关系数用r表示，其中n为样本量，分别为两个变量的观测值和均值。r描述的是两个变量间线性相关强弱的程度。r的绝对值越大表明相关性越强。<br>计算公式：</p>
+<script type="math/tex; mode=display">
+r=\frac{\sum_{i=1}^{n}\left(X_{i}-\overline{x}\right)\left(Y_{i}-\overline{y}\right)}{\sqrt{\sum_{i=1}^{n}\left(X_{i}-\overline{x}\right)^{2}} \sqrt{\sum_{i=1}^{n}\left(Y_{i}-\overline{y}\right)^{2}}}</script><p>分子是两个集合的交集大小，分母是两个集合大小的几何平均值。是余弦相似性的一种形式</p>
+<h1 id="编辑距离"><a href="#编辑距离" class="headerlink" title="编辑距离"></a>编辑距离</h1><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/8010193?fr=aladdin">编辑距离</a>（Edit Distance）:又称Levenshtein距离，是指两个字串之间，由一个转成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。一般来说，编辑距离越小，两个串的相似度越大。俄罗斯科学家Vladimir Levenshtein在1965年提出这个概念。编辑距离越小的两个字符串越相似，当编辑距离为0时，两字符串相等。</p>
+<script type="math/tex; mode=display">f(n) = \begin{cases}max(i,j) & \text{if min(i,j)=0} \\ min{\begin{cases} lev_{a,b}(i-1,j)+1 \\ lev_{a,b}(i,j-1)+1 \\ lev_{a,b}(i-1,j-1)+1_{(a_i \neq b_j)} \end{cases}} & \text{otherwise.}\end{cases}</script><h1 id="K-L散度"><a href="#K-L散度" class="headerlink" title="K-L散度"></a>K-L散度</h1><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%9B%B8%E5%AF%B9%E7%86%B5/4233536?fr=aladdin">K-L散度</a>即相对熵；是衡量两个分布(P、Q)之间的距离；越小越相似。<br>计算公式：</p>
+<script type="math/tex; mode=display">D(P||Q)=\sum_{i=1}^nP(i)log{P(i) \over Q(i)}</script><hr>
+<p>参考博客：</p>
+<p>[1] <a target="_blank" rel="noopener" href="https://www.iteblog.com/archives/2317.html">机器学习中常用的距离公式</a></p>
+<p>[2] <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/185abcc8b166">常用的相似性度量算法</a></p>
+<p>[3] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/27305237">机器学习和统计学中常见的距离和相似度度量</a></p>
+<p>[4] <a target="_blank" rel="noopener" href="https://my.oschina.net/hunglish/blog/787596">几种距离度量方法比较</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/28/TopN/" rel="prev" title="JAVA|MapReduce-TopN">
+                  <i class="fa fa-angle-left"></i> JAVA|MapReduce-TopN
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/07/07/BOF/" rel="next" title="Python|基于BOF算法的图像检索">
+                  Python|基于BOF算法的图像检索 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Mengqiu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '32px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+</body>
+</html>
