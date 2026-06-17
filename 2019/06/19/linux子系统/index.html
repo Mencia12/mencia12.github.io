@@ -79,12 +79,6 @@
 
 
 
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js" defer></script>
-
-
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -176,7 +170,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WSL"><span class="nav-number">1.</span> <span class="nav-text">WSL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E5%AD%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">Linux子系统的位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WSL%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E6%8A%A5%E9%94%99-sbin-ldconfig-real-usr-lib-wsl-lib-libcuda-so-1-is-not-a-symbolic-link"><span class="nav-number">1.4.</span> <span class="nav-text">WSL安装软件报错&#x2F;sbin&#x2F;ldconfig.real: &#x2F;usr&#x2F;lib&#x2F;wsl&#x2F;lib&#x2F;libcuda.so.1 is not a symbolic link</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">Linux常用命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B8%A9%E5%9D%91"><span class="nav-number">3.</span> <span class="nav-text">服务器踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sh%E6%8C%87%E4%BB%A4%E8%BF%90%E8%A1%8C%E5%87%BA%E9%94%99"><span class="nav-number">3.1.</span> <span class="nav-text">.sh指令运行出错</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#wsl"><span class="nav-number">1.</span> <span class="nav-text"> WSL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text"> 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text"> 使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux%E5%AD%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text"> Linux子系统的位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wsl%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E6%8A%A5%E9%94%99sbinldconfigreal-usrlibwslliblibcudaso1-is-not-a-symbolic-link"><span class="nav-number">1.4.</span> <span class="nav-text"> WSL安装软件报错&#x2F;sbin&#x2F;ldconfig.real: &#x2F;usr&#x2F;lib&#x2F;wsl&#x2F;lib&#x2F;libcuda.so.1 is not a symbolic link</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text"> Linux常用命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B8%A9%E5%9D%91"><span class="nav-number">3.</span> <span class="nav-text"> 服务器踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sh%E6%8C%87%E4%BB%A4%E8%BF%90%E8%A1%8C%E5%87%BA%E9%94%99"><span class="nav-number">3.1.</span> <span class="nav-text"> .sh指令运行出错</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -189,7 +183,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -270,9 +264,12 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>Windows 10 专业版<br><span id="more"></span></p>
+    <div class="post-body" itemprop="articleBody"><p>Windows 10 专业版</p>
+<span id="more"></span>
 <p>最近用c语言写socket套接字，需要在Linux上编译运行。但用虚拟机不仅占内存大而且耗电也挺多的，突然想起来有个Linux子系统。于是就决定放弃vbox，试试系统自带的。</p>
-<h1 id="WSL"><a href="#WSL" class="headerlink" title="WSL"></a>WSL</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先在windows功能中启动”<strong>适用于Linux的windows子系统</strong>“</p>
+<h1 id="wsl"><a class="markdownIt-Anchor" href="#wsl"></a> WSL</h1>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<p>首先在windows功能中启动&quot;<strong>适用于Linux的windows子系统</strong>&quot;</p>
 <p><img src="/2019/06/19/linux%E5%AD%90%E7%B3%BB%E7%BB%9F/1.png" alt="1"></p>
 <p>然后在Microsoft store里搜索ubuntu</p>
 <p><img src="/2019/06/19/linux%E5%AD%90%E7%B3%BB%E7%BB%9F/2.png" alt="2"></p>
@@ -281,14 +278,32 @@
 <p>最后安装编译环境，由于目前只用C和C++,所以我只安装了gcc和g++</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install build-essential</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/06/19/linux%E5%AD%90%E7%B3%BB%E7%BB%9F/4.png" alt="4"></p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>经过上面的步骤安装成功后，打开命令行，打开你要编译的文件的文件夹下，输入bash，启动子系统。下来的操作就和Linux中一样了。<br><img src="/2019/06/19/linux%E5%AD%90%E7%B3%BB%E7%BB%9F/5.png" alt="5"></p>
-<h2 id="Linux子系统的位置"><a href="#Linux子系统的位置" class="headerlink" title="Linux子系统的位置"></a>Linux子系统的位置</h2><p>以我的系统为例，WSL的root目录对应windows的：<br><figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="name">C</span>:\Users\name\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18<span class="number">.04</span>onWindows_79rhkp1fndgsc\LocalState\rootfs</span><br></pre></td></tr></table></figure><br>但实际上微软为我们提供了一个默认的变量可以直接指向WSL的目录，你可以在运行(win+R)或资源管理器的路径里直接输入<code>\\wsl$</code>进入Ubuntu的目录<br><img src="/2019/06/19/linux%E5%AD%90%E7%B3%BB%E7%BB%9F/6.png" alt="6"></p>
+<h2 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h2>
+<p>经过上面的步骤安装成功后，打开命令行，打开你要编译的文件的文件夹下，输入bash，启动子系统。下来的操作就和Linux中一样了。<br>
+<img src="/2019/06/19/linux%E5%AD%90%E7%B3%BB%E7%BB%9F/5.png" alt="5"></p>
+<h2 id="linux子系统的位置"><a class="markdownIt-Anchor" href="#linux子系统的位置"></a> Linux子系统的位置</h2>
+<p>以我的系统为例，WSL的root目录对应windows的：</p>
+<figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="name">C</span>:\Users\name\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18<span class="number">.04</span>onWindows_79rhkp1fndgsc\LocalState\rootfs</span><br></pre></td></tr></table></figure>
+<p>但实际上微软为我们提供了一个默认的变量可以直接指向WSL的目录，你可以在运行(win+R)或资源管理器的路径里直接输入<code>\\wsl$</code>进入Ubuntu的目录<br>
+<img src="/2019/06/19/linux%E5%AD%90%E7%B3%BB%E7%BB%9F/6.png" alt="6"></p>
 <hr>
-<p>以上就是Linux子系统的简单使用，如果有新的发现将会继续更新。<br>同时欢迎留言分享！ヾ(•ω•`)o</p>
-<h2 id="WSL安装软件报错-sbin-ldconfig-real-usr-lib-wsl-lib-libcuda-so-1-is-not-a-symbolic-link"><a href="#WSL安装软件报错-sbin-ldconfig-real-usr-lib-wsl-lib-libcuda-so-1-is-not-a-symbolic-link" class="headerlink" title="WSL安装软件报错/sbin/ldconfig.real: /usr/lib/wsl/lib/libcuda.so.1 is not a symbolic link"></a>WSL安装软件报错/sbin/ldconfig.real: /usr/lib/wsl/lib/libcuda.so.1 is not a symbolic link</h2><p>解决<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/lib/wsl</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> lib2</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s lib/* lib2</span><br></pre></td></tr></table></figure></p>
-<p>更改wsl配置文件<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="keyword">vim</span> /etc/ld.<span class="keyword">so</span>.<span class="keyword">conf</span>.d/ld.wsl.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure><br>将 /usr/lib/wsl/lib 改为 /usr/lib/wsl/lib2<br>测试修改是否生效<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ldconfig</span><br></pre></td></tr></table></figure></p>
-<p>永久修改<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cat</span> &gt;&gt; /etc/wsl.conf &lt;&lt; <span class="string">EOF</span></span><br></pre></td></tr></table></figure><br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[automount]</span><br><span class="line"><span class="attribute">ldconfig</span> <span class="operator">=</span> fasle</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
-<h1 id="Linux常用命令"><a href="#Linux常用命令" class="headerlink" title="Linux常用命令"></a><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-command-manual.html">Linux常用命令</a></h1><h1 id="服务器踩坑"><a href="#服务器踩坑" class="headerlink" title="服务器踩坑"></a>服务器踩坑</h1><h2 id="sh指令运行出错"><a href="#sh指令运行出错" class="headerlink" title=".sh指令运行出错"></a>.sh指令运行出错</h2><p>在win上编辑导致字符格式不对,文件中空格和换行被识别错误</p>
+<p>以上就是Linux子系统的简单使用，如果有新的发现将会继续更新。<br>
+同时欢迎留言分享！ヾ(•ω•`)o</p>
+<h2 id="wsl安装软件报错sbinldconfigreal-usrlibwslliblibcudaso1-is-not-a-symbolic-link"><a class="markdownIt-Anchor" href="#wsl安装软件报错sbinldconfigreal-usrlibwslliblibcudaso1-is-not-a-symbolic-link"></a> WSL安装软件报错/sbin/ldconfig.real: /usr/lib/wsl/lib/libcuda.so.1 is not a symbolic link</h2>
+<p>解决</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/lib/wsl</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> lib2</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s lib/* lib2</span><br></pre></td></tr></table></figure>
+<p>更改wsl配置文件</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="keyword">vim</span> /etc/ld.<span class="keyword">so</span>.<span class="keyword">conf</span>.d/ld.wsl.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure>
+<p>将 /usr/lib/wsl/lib 改为 /usr/lib/wsl/lib2<br>
+测试修改是否生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ldconfig</span><br></pre></td></tr></table></figure>
+<p>永久修改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cat</span> &gt;&gt; /etc/wsl.conf &lt;&lt; <span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[automount]</span><br><span class="line"><span class="attribute">ldconfig</span> <span class="operator">=</span> fasle</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h1 id="linux常用命令"><a class="markdownIt-Anchor" href="#linux常用命令"></a> <a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-command-manual.html">Linux常用命令</a></h1>
+<h1 id="服务器踩坑"><a class="markdownIt-Anchor" href="#服务器踩坑"></a> 服务器踩坑</h1>
+<h2 id="sh指令运行出错"><a class="markdownIt-Anchor" href="#sh指令运行出错"></a> .sh指令运行出错</h2>
+<p>在win上编辑导致字符格式不对,文件中空格和换行被识别错误</p>
 
     </div>
 

@@ -74,12 +74,6 @@
 
 
 
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js" defer></script>
-
-
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -171,7 +165,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">二维码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9A%84%E7%94%9F%E6%88%90"><span class="nav-number">2.</span> <span class="nav-text">二维码的生成</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text"> 二维码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9A%84%E7%94%9F%E6%88%90"><span class="nav-number">2.</span> <span class="nav-text"> 二维码的生成</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -184,7 +178,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -265,17 +259,24 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><strong>简单生成二维码</strong><br><span id="more"></span></p>
-<h1 id="二维码"><a href="#二维码" class="headerlink" title="二维码"></a>二维码</h1><p>二维码也称为二维条码，是指在一维条码的基础上扩展出另一维具有可读性的条码，使用黑白矩形图案表示二进制数据，被设备扫描后可获取其中所包含的信息。一维条码的宽度记载着数据，而其长度没有记载数据。二维码的长度、宽度均记载着数据。二维码有一维条码没有的“定位点”和“容错机制”。容错机制在即使没有识别到全部的条码、或是说条码有污损时，也可以正确地还原条码上的信息。</p>
+    <div class="post-body" itemprop="articleBody"><p><strong>简单生成二维码</strong></p>
+<span id="more"></span>
+<h1 id="二维码"><a class="markdownIt-Anchor" href="#二维码"></a> 二维码</h1>
+<p>二维码也称为二维条码，是指在一维条码的基础上扩展出另一维具有可读性的条码，使用黑白矩形图案表示二进制数据，被设备扫描后可获取其中所包含的信息。一维条码的宽度记载着数据，而其长度没有记载数据。二维码的长度、宽度均记载着数据。二维码有一维条码没有的“定位点”和“容错机制”。容错机制在即使没有识别到全部的条码、或是说条码有污损时，也可以正确地还原条码上的信息。</p>
 <p>二维码在现实生活中的应用越来与普遍，归于功于 QR code 码制的流行。我们常说的二维码就是它。所以，二维码又被称为 QR code。</p>
 <blockquote>
 <p>QR code 是一种矩阵式二维条码（又称棋盘式二维条码）。它是在一个矩形空间通过黑、白像素在矩阵中的不同分布进行编码。在矩阵相应元素位置上，用点（方点、圆点或其他形状）的出现表示二进制“1”，点的不出现表示二进制的“0”，点的排列组合确定了矩阵式二维条码所代表的意义。</p>
 </blockquote>
-<h1 id="二维码的生成"><a href="#二维码的生成" class="headerlink" title="二维码的生成"></a>二维码的生成</h1><p>安装工具 <a target="_blank" rel="noopener" href="https://github.com/sylnsfar/qrcode">Myqr</a>：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> myqr</span><br></pre></td></tr></table></figure><br>生成一个普通二维码：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myqr https<span class="punctuation">:</span><span class="comment">//mengqiu233.github.io</span></span><br></pre></td></tr></table></figure><br>这时就会在当前目录下生成一个名称为 qrcode.png 的二维码<br><img src="/2020/02/28/%E4%BA%8C%E7%BB%B4%E7%A0%81/qrcode.png" alt="1"></p>
+<h1 id="二维码的生成"><a class="markdownIt-Anchor" href="#二维码的生成"></a> 二维码的生成</h1>
+<p>安装工具 <a target="_blank" rel="noopener" href="https://github.com/sylnsfar/qrcode">Myqr</a>：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> myqr</span><br></pre></td></tr></table></figure>
+<p>生成一个普通二维码：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myqr https<span class="punctuation">:</span><span class="comment">//mengqiu233.github.io</span></span><br></pre></td></tr></table></figure>
+<p>这时就会在当前目录下生成一个名称为 qrcode.png 的二维码<br>
+<img src="/2020/02/28/%E4%BA%8C%E7%BB%B4%E7%A0%81/qrcode.png" alt="1"></p>
 <blockquote>
 <p>注意这里的字符串不能指定中文</p>
 </blockquote>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -288,6 +289,7 @@
 <tr>
 <td>-d</td>
 <td>输出的文件路径</td>
+<td></td>
 </tr>
 <tr>
 <td>-n</td>
@@ -307,11 +309,13 @@
 <tr>
 <td>-p</td>
 <td>添加图片</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-</div>
-<p>比如将图片结合到二维码中<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">myqr</span> https://mengqiu233.github.io/ -p tree.jpg -c</span><br></pre></td></tr></table></figure><br><img src="/2020/02/28/%E4%BA%8C%E7%BB%B4%E7%A0%81/mencia_qrcode.png" alt="2"></p>
+<p>比如将图片结合到二维码中</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">myqr</span> https://mengqiu233.github.io/ -p tree.jpg -c</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/02/28/%E4%BA%8C%E7%BB%B4%E7%A0%81/mencia_qrcode.png" alt="2"></p>
 
     </div>
 

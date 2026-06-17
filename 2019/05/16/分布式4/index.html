@@ -81,12 +81,6 @@
 
 
 
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js" defer></script>
-
-
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -178,7 +172,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFWeb-Service%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是Web Service？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%8C%85%E5%90%AB%E7%9A%84%E6%A0%87%E5%87%86%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.1.</span> <span class="nav-text">主要包含的标准协议</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%8E%E8%B0%83%E7%94%A8Web-Service%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">实现与调用Web Service的流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.1.</span> <span class="nav-text">服务端的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text">客户端的实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">例子</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFweb-service"><span class="nav-number">1.</span> <span class="nav-text"> 什么是Web Service？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%8C%85%E5%90%AB%E7%9A%84%E6%A0%87%E5%87%86%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.1.</span> <span class="nav-text"> 主要包含的标准协议</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%8E%E8%B0%83%E7%94%A8web-service%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text"> 实现与调用Web Service的流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.1.</span> <span class="nav-text"> 服务端的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text"> 客户端的实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text"> 例子</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -191,7 +185,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -272,8 +266,10 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><strong>编写Web Service客户端程序。</strong><br><span id="more"></span></p>
-<h1 id="什么是Web-Service？"><a href="#什么是Web-Service？" class="headerlink" title="什么是Web Service？"></a>什么是Web Service？</h1><ul>
+    <div class="post-body" itemprop="articleBody"><p><strong>编写Web Service客户端程序。</strong></p>
+<span id="more"></span>
+<h1 id="什么是web-service"><a class="markdownIt-Anchor" href="#什么是web-service"></a> 什么是Web Service？</h1>
+<ul>
 <li>为方便网络上不同节点之间互操作而定义的一套协议标准， 也可视为实现远程过程调用的一套协议标准。(W3C)</li>
 <li>方便了Business to Business的业务集成。可以将多个第三方服务组合成一种新的服务。</li>
 <li>Web系统功能被扩展：不只是用于共享文档，不只是为“看”；Web系统也被用于节点之间的互操作。</li>
@@ -281,7 +277,8 @@
 <li>跨平台、跨语言、面向接口编程</li>
 <li>实现面向服务构架(SOA：Service-oriented Architecture)的重要技术之一</li>
 </ul>
-<h2 id="主要包含的标准协议"><a href="#主要包含的标准协议" class="headerlink" title="主要包含的标准协议"></a>主要包含的标准协议</h2><ul>
+<h2 id="主要包含的标准协议"><a class="markdownIt-Anchor" href="#主要包含的标准协议"></a> 主要包含的标准协议</h2>
+<ul>
 <li>消息编码标准(XML)</li>
 <li>传输协议标准(HTTP、SMTP、TCP、UDP)</li>
 <li>远程对象访问协议（即远程方法调用协议）：SOAP(Simple Object Access Protocol):</li>
@@ -290,26 +287,50 @@
 <li>安全相关标准：签名、加密、认证等</li>
 <li>服务组合、服务编排</li>
 </ul>
-<p><strong>SOAP</strong><br><img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/6.png" alt="6"></p>
-<p><strong>WSDL与UDDI</strong><br><img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/7.png" alt="7"></p>
-<h1 id="实现与调用Web-Service的流程"><a href="#实现与调用Web-Service的流程" class="headerlink" title="实现与调用Web Service的流程"></a>实现与调用Web Service的流程</h1><h2 id="服务端的实现"><a href="#服务端的实现" class="headerlink" title="服务端的实现"></a>服务端的实现</h2><ol>
+<p><strong>SOAP</strong><br>
+<img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/6.png" alt="6"></p>
+<p><strong>WSDL与UDDI</strong><br>
+<img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/7.png" alt="7"></p>
+<h1 id="实现与调用web-service的流程"><a class="markdownIt-Anchor" href="#实现与调用web-service的流程"></a> 实现与调用Web Service的流程</h1>
+<h2 id="服务端的实现"><a class="markdownIt-Anchor" href="#服务端的实现"></a> 服务端的实现</h2>
+<ol>
 <li>用常用高级编程语言（例如Java）定义Web服务接口</li>
 <li>根据Java定义的Web服务接口生成WSDL（中间件自动做）</li>
 <li>定义实现接口的Web服务实现类</li>
 <li>将Web服务实现类绑定到Web服务器</li>
 <li>将Web服务注册的UDDI中心</li>
 </ol>
-<h2 id="客户端的实现"><a href="#客户端的实现" class="headerlink" title="客户端的实现"></a>客户端的实现</h2><ol>
+<h2 id="客户端的实现"><a class="markdownIt-Anchor" href="#客户端的实现"></a> 客户端的实现</h2>
+<ol>
 <li>从UDDI中心查找的目标Web服务的接口定义（WSDL）</li>
 <li>根据WSDL生成Web服务代理类(WSDL to Java)</li>
 <li>利用Web服务代理类调用Web服务接口中定义的具体方法</li>
 </ol>
-<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><p><strong>题目</strong>：<br>到免费公开Web Service目录网站（如<a target="_blank" rel="noopener" href="http://www.webxml.com.cn">http://www.webxml.com.cn</a>）上找到一种自己感兴趣的Web Service，如：天气预报服务、飞机航班时刻表查询服务、火车时刻表查询服务、邮政编码查询服务、中国股票行情查询、及时外汇查询等，编写一个该服务的调用客户端程序。</p>
+<h1 id="例子"><a class="markdownIt-Anchor" href="#例子"></a> 例子</h1>
+<p><strong>题目</strong>：<br>
+到免费公开Web Service目录网站（如<a target="_blank" rel="noopener" href="http://www.webxml.com.cn">http://www.webxml.com.cn</a>）上找到一种自己感兴趣的Web Service，如：天气预报服务、飞机航班时刻表查询服务、火车时刻表查询服务、邮政编码查询服务、中国股票行情查询、及时外汇查询等，编写一个该服务的调用客户端程序。</p>
 <hr>
-<p><strong>实现过程</strong><br>1.首先在Web Services的网站中找到目标Web服务的接口定义。（我选的是IP地址，主要要的是WSDL那一行）<br><img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/1.png" alt="网站"><br>拷贝网址<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://<span class="keyword">ws</span>.webxml.<span class="keyword">com</span>.<span class="keyword">cn</span>/WebServices/IpAddressSearchWebService.asmx?wsdl</span><br></pre></td></tr></table></figure><br>2.打开命令行输入命令，根据WSDL生成Web服务代理类<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> 你的文件夹</span><br><span class="line">wsimport -keep -<span class="keyword">p</span> wsproxy 你拷贝的网址</span><br><span class="line">（比如：http://<span class="keyword">ws</span>.webxml.<span class="keyword">com</span>.<span class="keyword">cn</span>/WebServices/IpAddressSearchWebService.asmx?wsdl）</span><br><span class="line"></span><br></pre></td></tr></table></figure><br><img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/2.png" alt="ml"><br>在你的文件夹中会出现一个wsproxy文件夹<br><img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/4.png" alt="file"><br>3.利用Web服务代理类调用Web服务接口中定义的具体方法，编写客户端。这步比较麻烦，有接口说明的简单点，没有的就要根据上一步生成的文件猜测了。下面是我的，可以比较着写。<br><img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/3.png" alt="code"><br>4.最后，编译并运行客户端<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">javac </span>.\wsclient\*.<span class="keyword">java</span></span><br><span class="line"><span class="keyword"></span><span class="keyword">java </span>wsclient.CodeInfoClient</span><br><span class="line">(这里是我的客户端的位置和名称)</span><br></pre></td></tr></table></figure><br><img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/5.png" alt="end"></p>
+<p><strong>实现过程</strong><br>
+1.首先在Web Services的网站中找到目标Web服务的接口定义。（我选的是IP地址，主要要的是WSDL那一行）<br>
+<img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/1.png" alt="网站"><br>
+拷贝网址</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://<span class="keyword">ws</span>.webxml.<span class="keyword">com</span>.<span class="keyword">cn</span>/WebServices/IpAddressSearchWebService.asmx?wsdl</span><br></pre></td></tr></table></figure>
+<p>2.打开命令行输入命令，根据WSDL生成Web服务代理类</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> 你的文件夹</span><br><span class="line">wsimport -keep -<span class="keyword">p</span> wsproxy 你拷贝的网址</span><br><span class="line">（比如：http://<span class="keyword">ws</span>.webxml.<span class="keyword">com</span>.<span class="keyword">cn</span>/WebServices/IpAddressSearchWebService.asmx?wsdl）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/2.png" alt="ml"><br>
+在你的文件夹中会出现一个wsproxy文件夹<br>
+<img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/4.png" alt="file"><br>
+3.利用Web服务代理类调用Web服务接口中定义的具体方法，编写客户端。这步比较麻烦，有接口说明的简单点，没有的就要根据上一步生成的文件猜测了。下面是我的，可以比较着写。<br>
+<img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/3.png" alt="code"><br>
+4.最后，编译并运行客户端</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">javac </span>.\wsclient\*.<span class="keyword">java</span></span><br><span class="line"><span class="keyword"></span><span class="keyword">java </span>wsclient.CodeInfoClient</span><br><span class="line">(这里是我的客户端的位置和名称)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/05/16/%E5%88%86%E5%B8%83%E5%BC%8F4/5.png" alt="end"></p>
 <p>PS: 第一步的网站是免费的，但里面的网址不是都可以用的，如果第二步出错，换个网址试试</p>
-<p><strong>再举个例子</strong><br>QQ在线查询<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsimport -keep -<span class="keyword">p</span> wsproxy http://<span class="keyword">ws</span>.webxml.<span class="keyword">com</span>.<span class="keyword">cn</span>/webservices/qqOnlineWebService.asmx?wsdl</span><br></pre></td></tr></table></figure><br>CodeInfoClient.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> wsclient;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> wsproxy.*;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CodeInfoClient</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">QqOnlineWebService</span> <span class="variable">service</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">QqOnlineWebService</span>();</span><br><span class="line">        <span class="type">QqOnlineWebServiceSoap</span> <span class="variable">pService</span> <span class="operator">=</span> service.getQqOnlineWebServiceSoap();</span><br><span class="line">         </span><br><span class="line">        System.out.println(pService.qqCheckOnline(<span class="string">&quot;QQ号&quot;</span>));</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
+<p><strong>再举个例子</strong><br>
+QQ在线查询</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsimport -keep -<span class="keyword">p</span> wsproxy http://<span class="keyword">ws</span>.webxml.<span class="keyword">com</span>.<span class="keyword">cn</span>/webservices/qqOnlineWebService.asmx?wsdl</span><br></pre></td></tr></table></figure>
+<p>CodeInfoClient.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> wsclient;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> wsproxy.*;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CodeInfoClient</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">QqOnlineWebService</span> <span class="variable">service</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">QqOnlineWebService</span>();</span><br><span class="line">        <span class="type">QqOnlineWebServiceSoap</span> <span class="variable">pService</span> <span class="operator">=</span> service.getQqOnlineWebServiceSoap();</span><br><span class="line">         </span><br><span class="line">        System.out.println(pService.qqCheckOnline(<span class="string">&quot;QQ号&quot;</span>));</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     

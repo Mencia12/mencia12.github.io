@@ -76,12 +76,6 @@
 
 
 
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js" defer></script>
-
-
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -173,7 +167,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">应用</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text"> 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text"> 特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text"> 算法步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text"> 应用</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -186,7 +180,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -267,28 +261,40 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><strong>尺度不变特征变换（Scale-invariant feature transform，SIFT），是用于图像处理领域的一种描述。</strong><br><span id="more"></span></p>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/SIFT/1396275?fr=aladdin">SIFT算法</a>是一种提取局部特征的算法，基于物体上的一些局部外观的兴趣点而与影像的大小和旋转无关。对于光线、噪声、微视角改变的容忍度也相当高。基于这些特性，它们是高度显著而且相对容易撷取，在母数庞大的特征数据库中，很容易辨识物体而且鲜有误认。使用SIFT特征描述对于部分物体遮蔽的侦测率也相当高，甚至只需要3个以上的SIFT物体特征就足以计算出位置与方位。在现今的电脑硬件速度下和小型的特征数据库条件下，辨识速度可接近即时运算。SIFT特征的信息量大，适合在海量数据库中快速准确匹配。<br>匹配的过程就是对比这些特征点的过程，这个流程可以用下图表述：<br><img src="/2019/06/08/SIFT/1.png" alt="1"></p>
-<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><ul>
-<li>SIFT特征是图像的局部特征，其对旋转、尺度缩放、亮度变化保持不变性，对视角变化、仿射变换、噪声也保持一定程度的稳定性。 </li>
-<li>独特性好，信息量丰富，适用于在海量特征数据库中进行快速、准确匹配。 </li>
-<li>多量性，即使少数的几个物体也可以产生大量SIFT特征向量。 </li>
-<li>高速性，经优化的SIFT匹配算法甚至可以达到实时的要求。 </li>
+    <div class="post-body" itemprop="articleBody"><p><strong>尺度不变特征变换（Scale-invariant feature transform，SIFT），是用于图像处理领域的一种描述。</strong></p>
+<span id="more"></span>
+<h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/SIFT/1396275?fr=aladdin">SIFT算法</a>是一种提取局部特征的算法，基于物体上的一些局部外观的兴趣点而与影像的大小和旋转无关。对于光线、噪声、微视角改变的容忍度也相当高。基于这些特性，它们是高度显著而且相对容易撷取，在母数庞大的特征数据库中，很容易辨识物体而且鲜有误认。使用SIFT特征描述对于部分物体遮蔽的侦测率也相当高，甚至只需要3个以上的SIFT物体特征就足以计算出位置与方位。在现今的电脑硬件速度下和小型的特征数据库条件下，辨识速度可接近即时运算。SIFT特征的信息量大，适合在海量数据库中快速准确匹配。<br>
+匹配的过程就是对比这些特征点的过程，这个流程可以用下图表述：<br>
+<img src="/2019/06/08/SIFT/1.png" alt="1"></p>
+<h1 id="特点"><a class="markdownIt-Anchor" href="#特点"></a> 特点</h1>
+<ul>
+<li>SIFT特征是图像的局部特征，其对旋转、尺度缩放、亮度变化保持不变性，对视角变化、仿射变换、噪声也保持一定程度的稳定性。</li>
+<li>独特性好，信息量丰富，适用于在海量特征数据库中进行快速、准确匹配。</li>
+<li>多量性，即使少数的几个物体也可以产生大量SIFT特征向量。</li>
+<li>高速性，经优化的SIFT匹配算法甚至可以达到实时的要求。</li>
 <li>可扩展性，可以很方便的与其他形式的特征向量进行联合。</li>
 </ul>
-<h1 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h1><ol>
+<h1 id="算法步骤"><a class="markdownIt-Anchor" href="#算法步骤"></a> 算法步骤</h1>
+<ol>
 <li>检测尺度空间极值点</li>
 <li>精确定位极值点</li>
 <li>为每个关键点指定方向参数</li>
 <li>关键点描述子的生成</li>
 </ol>
-<h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><p>OpenCV中带有SIFT算法。可以直接调用<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import cv2</span><br><span class="line"></span><br><span class="line">img= cv2<span class="selector-class">.imread</span>(<span class="string">&#x27;C:/Code/Picture/apple.jpg&#x27;</span>)</span><br><span class="line">gray=cv2<span class="selector-class">.cvtColor</span>(<span class="selector-tag">img</span>,cv2.COLOR_BGR2GRAY)</span><br><span class="line"></span><br><span class="line">sift=cv2<span class="selector-class">.xfeatures2d</span><span class="selector-class">.SIFT_create</span>()</span><br><span class="line">keypoints,descriptor=sift<span class="selector-class">.detectAndCompute</span>(gray,None)</span><br><span class="line"></span><br><span class="line">img=cv2<span class="selector-class">.drawKeypoints</span>(image=<span class="selector-tag">img</span>,outImage=<span class="selector-tag">img</span>,keypoints=keypoints,flags=cv2<span class="selector-class">.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS</span>,<span class="attribute">color</span>=(<span class="number">51</span>,<span class="number">163</span>,<span class="number">236</span>))</span><br><span class="line">cv2<span class="selector-class">.imshow</span>(<span class="string">&#x27;sift_keypoints&#x27;</span>,img)</span><br><span class="line"></span><br><span class="line">cv2<span class="selector-class">.waitKey</span>(<span class="number">0</span>)</span><br><span class="line">cv2<span class="selector-class">.destroyAllWindows</span>()</span><br></pre></td></tr></table></figure><br><img src="/2019/06/08/SIFT/new.png" alt="apple"></p>
+<h1 id="应用"><a class="markdownIt-Anchor" href="#应用"></a> 应用</h1>
+<p>OpenCV中带有SIFT算法。可以直接调用</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import cv2</span><br><span class="line"></span><br><span class="line">img= cv2<span class="selector-class">.imread</span>(<span class="string">&#x27;C:/Code/Picture/apple.jpg&#x27;</span>)</span><br><span class="line">gray=cv2<span class="selector-class">.cvtColor</span>(<span class="selector-tag">img</span>,cv2.COLOR_BGR2GRAY)</span><br><span class="line"></span><br><span class="line">sift=cv2<span class="selector-class">.xfeatures2d</span><span class="selector-class">.SIFT_create</span>()</span><br><span class="line">keypoints,descriptor=sift<span class="selector-class">.detectAndCompute</span>(gray,None)</span><br><span class="line"></span><br><span class="line">img=cv2<span class="selector-class">.drawKeypoints</span>(image=<span class="selector-tag">img</span>,outImage=<span class="selector-tag">img</span>,keypoints=keypoints,flags=cv2<span class="selector-class">.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS</span>,<span class="attribute">color</span>=(<span class="number">51</span>,<span class="number">163</span>,<span class="number">236</span>))</span><br><span class="line">cv2<span class="selector-class">.imshow</span>(<span class="string">&#x27;sift_keypoints&#x27;</span>,img)</span><br><span class="line"></span><br><span class="line">cv2<span class="selector-class">.waitKey</span>(<span class="number">0</span>)</span><br><span class="line">cv2<span class="selector-class">.destroyAllWindows</span>()</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/06/08/SIFT/new.png" alt="apple"></p>
 <blockquote>
-<p>OpenCV使用SIFT时报错,建议卸载后安装opencv-contrib-python,同时3.4.3.18以上的版本会出现专利问题而无法使用。安装前记得卸载原来的。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install opencv-contrib-python==<span class="number">3.4</span><span class="number">.2</span><span class="number">.17</span></span><br></pre></td></tr></table></figure></p>
+<p>OpenCV使用SIFT时报错,建议卸载后安装opencv-contrib-python,同时3.4.3.18以上的版本会出现专利问题而无法使用。安装前记得卸载原来的。</p>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install opencv-contrib-python==<span class="number">3.4</span><span class="number">.2</span><span class="number">.17</span></span><br></pre></td></tr></table></figure>
 <hr>
 <blockquote>
-<p>参考文献<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/dcrmg/article/details/52577555">Sift算子特征点提取、描述及匹配全流程解析</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/dcrmg/article/details/52561656">Sift中尺度空间、高斯金字塔、差分金字塔（DOG金字塔）、图像金字塔</a></p>
+<p>参考文献<br>
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/dcrmg/article/details/52577555">Sift算子特征点提取、描述及匹配全流程解析</a><br>
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/dcrmg/article/details/52561656">Sift中尺度空间、高斯金字塔、差分金字塔（DOG金字塔）、图像金字塔</a></p>
 </blockquote>
 
     </div>
