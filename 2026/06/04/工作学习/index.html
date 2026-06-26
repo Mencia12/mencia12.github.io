@@ -29,7 +29,7 @@
 <meta property="og:description" content="笔记">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-04T06:55:22.000Z">
-<meta property="article:modified_time" content="2026-06-25T07:43:28.548Z">
+<meta property="article:modified_time" content="2026-06-26T07:24:47.410Z">
 <meta property="article:author" content="Mengqiu">
 <meta name="twitter:card" content="summary">
 
@@ -161,7 +161,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Linux服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0bash%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%E5%92%8C%E4%B8%8D%E5%8A%A0%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">加bash运行脚本和不加有什么区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">RocketMQ</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Nacos</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="nav-number">4.1.</span> <span class="nav-text">整体结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">4.2.</span> <span class="nav-text">启动流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">4.3.</span> <span class="nav-text">核心功能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E7%AE%A1%E7%90%86"><span class="nav-number">4.3.1.</span> <span class="nav-text">1. 服务注册管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%9C%8D%E5%8A%A1%E6%9F%A5%E8%AF%A2%E7%AE%A1%E7%90%86"><span class="nav-number">4.3.2.</span> <span class="nav-text">2. 服务查询管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="nav-number">4.3.3.</span> <span class="nav-text">3. 配置管理</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text"> Linux服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0bash%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%E5%92%8C%E4%B8%8D%E5%8A%A0%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text"> 加bash运行脚本和不加有什么区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text"> 数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rocketmq"><span class="nav-number">3.</span> <span class="nav-text"> RocketMQ</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nacos"><span class="nav-number">4.</span> <span class="nav-text"> Nacos</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="nav-number">4.1.</span> <span class="nav-text"> 整体结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">4.2.</span> <span class="nav-text"> 启动流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">4.3.</span> <span class="nav-text"> 核心功能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E7%AE%A1%E7%90%86"><span class="nav-number">4.3.1.</span> <span class="nav-text"> 1. 服务注册管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%9C%8D%E5%8A%A1%E6%9F%A5%E8%AF%A2%E7%AE%A1%E7%90%86"><span class="nav-number">4.3.2.</span> <span class="nav-text"> 2. 服务查询管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="nav-number">4.3.3.</span> <span class="nav-text"> 3. 配置管理</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -243,7 +243,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-06-25 15:43:28" itemprop="dateModified" datetime="2026-06-25T15:43:28+08:00">2026-06-25</time>
+      <time title="修改时间：2026-06-26 15:24:47" itemprop="dateModified" datetime="2026-06-26T15:24:47+08:00">2026-06-26</time>
     </span>
 
   
@@ -257,23 +257,23 @@
     
     <div class="post-body" itemprop="articleBody"><p>笔记</p>
 <span id="more"></span>
-<h1>Linux服务器</h1>
-<h2 id="加bash运行脚本和不加有什么区别">加bash运行脚本和不加有什么区别</h2>
-<h1>数据库</h1>
-<h1>RocketMQ</h1>
-<h1>Nacos</h1>
-<h2 id="整体结构">整体结构</h2>
+<h1 id="linux服务器"><a class="markdownIt-Anchor" href="#linux服务器"></a> Linux服务器</h1>
+<h2 id="加bash运行脚本和不加有什么区别"><a class="markdownIt-Anchor" href="#加bash运行脚本和不加有什么区别"></a> 加bash运行脚本和不加有什么区别</h2>
+<h1 id="数据库"><a class="markdownIt-Anchor" href="#数据库"></a> 数据库</h1>
+<h1 id="rocketmq"><a class="markdownIt-Anchor" href="#rocketmq"></a> RocketMQ</h1>
+<h1 id="nacos"><a class="markdownIt-Anchor" href="#nacos"></a> Nacos</h1>
+<h2 id="整体结构"><a class="markdownIt-Anchor" href="#整体结构"></a> 整体结构</h2>
 <p>根据源码目录分析，分层架构：</p>
 <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nacos-x</span><br><span class="line">├── <span class="keyword">distribution </span>                <span class="comment"># 打包发布模块</span></span><br><span class="line">├── nacos-x-server              <span class="comment"># 服务端核心模块</span></span><br><span class="line">├── nacos-x-server-<span class="keyword">extend </span>      <span class="comment"># 扩展插件模块</span></span><br><span class="line">└── spring-<span class="keyword">cloud-nacosx-starters </span><span class="comment"># 客户端Starter</span></span><br></pre></td></tr></table></figure>
 <p>核心服务模块：</p>
 <figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">com</span>.dcits.nacosx</span><br><span class="line">├── configuration   <span class="meta"># 配置类</span></span><br><span class="line">├── controller      <span class="meta"># 接口层</span></span><br><span class="line">├── event           <span class="meta"># 事件定义</span></span><br><span class="line">├── listener        <span class="meta"># 事件监听器</span></span><br><span class="line">├── model           <span class="meta"># 实体对象</span></span><br><span class="line">├── service         <span class="meta"># 业务逻辑层</span></span><br><span class="line">├── task            <span class="meta"># 定时任务</span></span><br><span class="line">├── utils           <span class="meta"># 工具类</span></span><br><span class="line">└── NacosXServer    <span class="meta"># 启动类</span></span><br></pre></td></tr></table></figure>
-<h2 id="启动流程">启动流程</h2>
+<h2 id="启动流程"><a class="markdownIt-Anchor" href="#启动流程"></a> 启动流程</h2>
 <p>启动入口：</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">NacosXServer</span></span><br></pre></td></tr></table></figure>
 <p>启动流程：</p>
 <figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">main</span>()</span></span><br><span class="line"> ↓</span><br><span class="line"><span class="variable">SpringBoot</span>启动</span><br><span class="line"> ↓</span><br><span class="line">加载配置</span><br><span class="line"> ↓</span><br><span class="line">初始化<span class="variable">Bean</span></span><br><span class="line"> ↓</span><br><span class="line">注册监听器</span><br><span class="line"> ↓</span><br><span class="line">启动定时任务</span><br><span class="line"> ↓</span><br><span class="line">对外提供服务</span><br></pre></td></tr></table></figure>
-<h2 id="核心功能分析">核心功能分析</h2>
-<h3 id="1-服务注册管理">1. 服务注册管理</h3>
+<h2 id="核心功能分析"><a class="markdownIt-Anchor" href="#核心功能分析"></a> 核心功能分析</h2>
+<h3 id="1-服务注册管理"><a class="markdownIt-Anchor" href="#1-服务注册管理"></a> 1. 服务注册管理</h3>
 <p>相关类：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">RegistrationController</span></span><br><span class="line">RegistrationServiceV2</span><br><span class="line">IRegistrationService</span><br></pre></td></tr></table></figure>
 <p>主要职责：</p>
@@ -285,7 +285,7 @@
 </ul>
 <p>调用流程：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">客户端</span><br><span class="line"> ↓</span><br><span class="line">RegistrationController</span><br><span class="line"> ↓</span><br><span class="line">RegistrationServiceV2</span><br><span class="line"> ↓</span><br><span class="line">Nacos注册中心</span><br></pre></td></tr></table></figure>
-<h3 id="2-服务查询管理">2. 服务查询管理</h3>
+<h3 id="2-服务查询管理"><a class="markdownIt-Anchor" href="#2-服务查询管理"></a> 2. 服务查询管理</h3>
 <p>相关类：</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ServiceController</span></span><br></pre></td></tr></table></figure>
 <p>主要职责：</p>
@@ -296,7 +296,7 @@
 </ul>
 <p>调用流程：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">客户端</span><br><span class="line"> ↓</span><br><span class="line">ServiceController</span><br><span class="line"> ↓</span><br><span class="line">RegistrationServiceV2</span><br><span class="line"> ↓</span><br><span class="line">返回服务实例</span><br></pre></td></tr></table></figure>
-<h3 id="3-配置管理">3. 配置管理</h3>
+<h3 id="3-配置管理"><a class="markdownIt-Anchor" href="#3-配置管理"></a> 3. 配置管理</h3>
 <p>相关类：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ConfigsController</span><br><span class="line">ConfigXConfiguration</span><br></pre></td></tr></table></figure>
 <p>主要职责：</p>
