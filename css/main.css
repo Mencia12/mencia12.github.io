@@ -186,8 +186,8 @@ body {
   background: var(--body-bg-color);
   box-sizing: border-box;
   color: var(--text-color);
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 1.05em;
   line-height: 2;
   min-height: 100%;
   position: relative;
@@ -199,28 +199,28 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 30px 0 15px;
 }
 h1 {
-  font-size: 1.5em;
+  font-size: 0.975em;
 }
 h2 {
-  font-size: 1.375em;
+  font-size: 0.85em;
 }
 h3 {
-  font-size: 1.25em;
+  font-size: 0.725em;
 }
 h4 {
-  font-size: 1.125em;
+  font-size: 0.6em;
 }
 h5 {
-  font-size: 1em;
+  font-size: 0.475em;
 }
 h6 {
-  font-size: 0.875em;
+  font-size: 0.35em;
 }
 a {
   border-bottom: 1px solid #999;
@@ -505,13 +505,29 @@ code.hljs {
   padding: 2px 6px;
   position: absolute;
   transition: opacity 0.2s ease-in-out;
-  background-color: #eee;
-  background-image: linear-gradient(#fcfcfc, #eee);
-  border: 1px solid #d5d5d5;
-  border-radius: 3px;
-  font-size: 0.8125em;
-  right: 4px;
-  top: 8px;
+  color: var(--highlight-foreground);
+  font-size: 14px;
+  right: 0;
+  top: 2px;
+}
+figure.highlight {
+  border-radius: 5px;
+  box-shadow: 0 10px 30px 0 rgba(0,0,0,0.4);
+  padding-top: 30px;
+}
+figure.highlight .table-container {
+  border-radius: 0 0 5px 5px;
+}
+figure.highlight::before {
+  background: #fc625d;
+  box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+  left: 12px;
+  margin-top: -20px;
+  position: absolute;
+  border-radius: 50%;
+  content: ' ';
+  height: 12px;
+  width: 12px;
 }
 code,
 kbd,
@@ -545,7 +561,7 @@ pre .caption a:hover {
 }
 pre,
 code {
-  font-family: consolas, Menlo, monospace, 'PingFang SC', 'Microsoft YaHei';
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, "Microsoft YaHei", monospace, consolas, Menlo, monospace, 'PingFang SC', 'Microsoft YaHei';
 }
 code {
   border-radius: 3px;
@@ -1111,7 +1127,7 @@ pre code {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   line-height: 1.5;
@@ -1253,7 +1269,7 @@ pre code {
     vertical-align: middle;
   }
   .links-of-author a::before {
-    background: #1240b8;
+    background: #ffdfff;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -1675,6 +1691,67 @@ pre code {
     transform: scale(1.1);
   }
 }
+@media (max-width: 567px) {
+  .main-inner {
+    padding: initial !important;
+  }
+  .posts-expand .post-header {
+    margin-bottom: 10px !important;
+  }
+  .post-block {
+    margin-top: initial !important;
+    padding: 8px 18px 8px !important;
+  }
+  .post-body h1,
+  .post-body h2,
+  .post-body h3,
+  .post-body h4,
+  .post-body h5,
+  .post-body h6 {
+    margin: 20px 0 8px;
+  }
+  .post-body .note h1,
+  .post-body .tabs .tab-content .tab-pane h1,
+  .post-body .note h2,
+  .post-body .tabs .tab-content .tab-pane h2,
+  .post-body .note h3,
+  .post-body .tabs .tab-content .tab-pane h3,
+  .post-body .note h4,
+  .post-body .tabs .tab-content .tab-pane h4,
+  .post-body .note h5,
+  .post-body .tabs .tab-content .tab-pane h5,
+  .post-body .note h6,
+  .post-body .tabs .tab-content .tab-pane h6 {
+    margin: 0 5px;
+  }
+  .post-body > p {
+    margin: 0 0 10px;
+  }
+  .post-body .note > p,
+  .post-body .tabs .tab-content .tab-pane > p {
+    padding: 0 5px;
+  }
+  .post-body img,
+  .post-body video {
+    margin-bottom: 10px !important;
+  }
+  .post-body figure:not(.highlight) figcaption {
+    margin: -5px auto 15px !important;
+  }
+  .post-body .note {
+    margin-bottom: 10px !important;
+    padding: 10px !important;
+  }
+  .post-body .tabs .tab-content .tab-pane {
+    padding: 10px 10px 0 !important;
+  }
+  .post-eof {
+    margin: 40px auto 20px !important;
+  }
+  .pagination {
+    margin-top: 40px;
+  }
+}
 .back-to-top {
   font-size: 12px;
   align-items: center;
@@ -1717,6 +1794,16 @@ pre code {
 }
 .back-to-top.back-to-top-on {
   bottom: 30px;
+}
+.reading-progress-bar {
+  --progress: 0;
+  background: #37c6c0;
+  height: 3px;
+  position: fixed;
+  z-index: 50;
+  width: var(--progress);
+  left: 0;
+  top: 0;
 }
 .rtl.post-body p,
 .rtl.post-body a,
@@ -1867,7 +1954,7 @@ pre code {
   width: 4px;
 }
 .post-body {
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   overflow-wrap: break-word;
 }
 @media (min-width: 1200px) {
@@ -1877,12 +1964,12 @@ pre code {
 }
 @media (min-width: 992px) {
   .post-body {
-    text-align: justify;
+    text-align: start;
   }
 }
 @media (max-width: 991px) {
   .post-body {
-    text-align: justify;
+    text-align: start;
   }
 }
 .post-body h1 .header-anchor,
@@ -2056,7 +2143,7 @@ pre code {
 }
 .posts-expand .post-meta-container {
   color: #999;
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 0.75em;
   margin-top: 3px;
 }
@@ -2825,5 +2912,94 @@ header.header {
   }
   .comments {
     padding: 10px 12px;
+  }
+}
+.post-body {
+  font-size: 1.06em;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+}
+.post-body > p,
+.post-body > ul,
+.post-body > ol,
+.post-body > blockquote,
+.post-body > .table-container {
+  margin: 1.25em 0;
+}
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4 {
+  font-weight: 650;
+  letter-spacing: 0.015em;
+  line-height: 1.4;
+}
+.post-body h1 {
+  margin-top: 2.5em;
+  padding-bottom: 0.45em;
+  border-bottom: 2px solid #ddd;
+}
+.post-body h2 {
+  margin-top: 2.1em;
+  padding-left: 0.7em;
+  border-left: 4px solid #37c6c0;
+}
+.post-body h3 {
+  margin-top: 1.75em;
+}
+.post-body a:not(.btn) {
+  text-decoration: underline;
+  text-decoration-color: rgba(55,198,192,0.45);
+  text-underline-offset: 3px;
+}
+.post-body blockquote {
+  padding: 0.7em 1.1em;
+  color: #666;
+  background: rgba(55,198,192,0.07);
+  border-left: 4px solid #37c6c0;
+  border-radius: 0 6px 6px 0;
+}
+.post-body code {
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+}
+.post-body .highlight,
+.post-body pre {
+  margin: 1.4em 0;
+  border-radius: 8px;
+}
+.post-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.75em auto;
+  border-radius: 6px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+}
+.post-body table {
+  display: table;
+  width: 100%;
+  font-size: 0.94em;
+}
+.post-body th {
+  background: rgba(55,198,192,0.1);
+}
+.post-title,
+.post-title-link {
+  letter-spacing: 0.02em;
+}
+.post-meta {
+  margin-top: 0.65em;
+}
+@media (max-width: $device-sm) {
+  .post-body {
+    font-size: 1em;
+    line-height: 1.82;
+  }
+  .post-body h1 {
+    margin-top: 2em;
+  }
+  .post-body h2 {
+    padding-left: 0.55em;
   }
 }
