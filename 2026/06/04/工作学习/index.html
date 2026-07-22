@@ -29,7 +29,7 @@
 <meta property="og:description" content="笔记">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-04T06:55:22.000Z">
-<meta property="article:modified_time" content="2026-07-14T07:43:23.094Z">
+<meta property="article:modified_time" content="2026-07-22T02:23:05.743Z">
 <meta property="article:author" content="Mengqiu">
 <meta property="article:tag" content="工作">
 <meta property="article:tag" content="核心">
@@ -179,7 +179,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -248,7 +248,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-07-14 15:43:23" itemprop="dateModified" datetime="2026-07-14T15:43:23+08:00">2026-07-14</time>
+      <time title="修改时间：2026-07-22 10:23:05" itemprop="dateModified" datetime="2026-07-22T10:23:05+08:00">2026-07-22</time>
     </span>
 
   
@@ -545,10 +545,9 @@
 <thead>
 <tr>
 <th style="text-align:left">方法</th>
-<th style="text-align:left">功能描述</th>
+<th style="text-align:left"><div style="width: 110pt">功能描述</div></th>
 <th style="text-align:left">输入(Input)</th>
 <th style="text-align:left">内部操作</th>
-<th style="text-align:left">调用(Call)</th>
 <th style="text-align:left">输出(Output)</th>
 </tr>
 </thead>
@@ -559,7 +558,6 @@
 <td style="text-align:left">namespace（可选）、group（可选）</td>
 <td style="text-align:left">先通过 <code>StringUtils.hasText()</code> 校验请求参数，当 namespace 为空但 group 不为空时抛出 <code>NacosException</code>；参数合法后调用 <code>registrationService.discovery()</code> 查询符合条件的服务实例，并将结果直接返回。</td>
 <td style="text-align:left"><code>RegistrationServiceV2.discovery()</code></td>
-<td style="text-align:left">Prometheus Service Discovery JSON</td>
 </tr>
 <tr>
 <td style="text-align:left"><code>getServices()</code></td>
@@ -567,7 +565,6 @@
 <td style="text-align:left">namespace、group</td>
 <td style="text-align:left">调用 <code>registrationService.listServiceNames()</code> 查询指定 Namespace、Group 下的服务名称，再通过 <code>ObjectMapper.writeValueAsString()</code> 序列化为 JSON 返回。</td>
 <td style="text-align:left"><code>RegistrationServiceV2.listServiceNames()</code></td>
-<td style="text-align:left">服务名称 JSON</td>
 </tr>
 <tr>
 <td style="text-align:left"><code>getInstances()</code></td>
@@ -575,7 +572,6 @@
 <td style="text-align:left">namespace、group、service</td>
 <td style="text-align:left">调用 <code>registrationService.listInstance()</code> 查询指定服务的实例列表，再通过 <code>ObjectMapper.writeValueAsString()</code> 转换为 JSON 返回。</td>
 <td style="text-align:left"><code>RegistrationServiceV2.listInstance()</code></td>
-<td style="text-align:left">实例列表 JSON</td>
 </tr>
 </tbody>
 </table>
@@ -584,10 +580,9 @@
 <thead>
 <tr>
 <th style="text-align:left">方法</th>
-<th style="text-align:left">功能描述</th>
+<th style="text-align:left"><div style="width: 110pt">功能描述</div></th>
 <th style="text-align:left">输入(Input)</th>
 <th style="text-align:left">内部操作</th>
-<th style="text-align:left">调用(Call)</th>
 <th style="text-align:left">输出(Output)</th>
 </tr>
 </thead>
@@ -598,7 +593,6 @@
 <td style="text-align:left">namespace、group</td>
 <td style="text-align:left">根据是否指定 namespace，调用 <code>listAllNamespace()</code> 或 <code>ServiceManager.getSingletons()</code> 获取需要遍历的服务；随后通过 <code>serviceStorage.getData()</code> 获取 <code>ServiceInfo</code>，再调用 <code>serviceInfo.getHosts()</code> 获取实例列表。实例获取后，通过 <code>removeIf()</code> 根据 <code>isMonitored</code> 过滤不需要监控的实例，再使用 <code>stream().filter()</code> 保留 <code>deployMode=vm</code> 的实例，最后利用 <code>targets.add()</code>、<code>labels.put()</code> 组装 Prometheus 所需的 JSON 数据并返回。</td>
 <td style="text-align:left"><code>listAllNamespace()</code>、<code>ServiceManager</code>、<code>ServiceStorage</code></td>
-<td style="text-align:left"><code>ArrayNode</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><code>listInstance()</code></td>
@@ -606,7 +600,6 @@
 <td style="text-align:left">namespace、group、serviceName</td>
 <td style="text-align:left">根据 namespace、group 和 serviceName 调用 <code>ServiceManager.getSingletonIfExist()</code> 获取对应的 Service，再通过 <code>serviceStorage.getData()</code> 查询 <code>ServiceInfo</code>，最后调用 <code>serviceInfo.getHosts()</code> 返回该服务的实例列表。</td>
 <td style="text-align:left"><code>ServiceManager</code>、<code>ServiceStorage</code></td>
-<td style="text-align:left"><code>List&lt;Instance&gt;</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><code>listServiceNames()</code></td>
@@ -614,7 +607,6 @@
 <td style="text-align:left">namespace、group</td>
 <td style="text-align:left">调用 <code>ServiceManager.getSingletons()</code> 获取 Namespace 下所有 Service，遍历每个 Service，通过 <code>service.getGroup().equals()</code> 筛选指定 Group，并调用 <code>service.getName()</code> 提取服务名称后返回。</td>
 <td style="text-align:left"><code>ServiceManager</code></td>
-<td style="text-align:left"><code>List&lt;String&gt;</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><code>getService()</code></td>
@@ -622,7 +614,6 @@
 <td style="text-align:left">serviceName、namespace、group</td>
 <td style="text-align:left">调用 <code>listInstance()</code> 获取指定服务实例，遍历实例后使用 <code>Map.put()</code> 封装 Address、ServiceName、ServicePort 等字段，最终生成符合 Consul Service Discovery 格式的数据。</td>
 <td style="text-align:left"><code>listInstance()</code></td>
-<td style="text-align:left"><code>List&lt;Map&lt;String,Object&gt;&gt;</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><code>getHealth()</code></td>
@@ -630,7 +621,6 @@
 <td style="text-align:left">serviceName、namespace、group</td>
 <td style="text-align:left">调用 <code>listInstance()</code> 获取实例列表，通过 <code>isCurrentCenter()</code> 判断实例是否属于当前数据中心，不符合条件的实例直接跳过；随后使用 <code>Map.put()</code> 分别封装 Node、Service 和 Checks 信息，并统一将状态设置为 <code>passing</code> 返回。</td>
 <td style="text-align:left"><code>listInstance()</code>、<code>isCurrentCenter()</code></td>
-<td style="text-align:left"><code>List&lt;Map&lt;String,Object&gt;&gt;</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><code>listAllNamespace()</code></td>
@@ -638,7 +628,6 @@
 <td style="text-align:left">无</td>
 <td style="text-align:left">直接调用 <code>ServiceManager.getAllNamespaces()</code> 查询 Nacos 中已注册的所有 Namespace 并返回。</td>
 <td style="text-align:left"><code>ServiceManager</code></td>
-<td style="text-align:left"><code>Collection&lt;String&gt;</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><code>listService()</code></td>
@@ -646,7 +635,6 @@
 <td style="text-align:left">namespace</td>
 <td style="text-align:left">调用 <code>ServiceManager.getSingletons()</code> 获取指定 Namespace 下所有 Service，遍历每个 Service，并拼接 <code>namespace@@group@@serviceName</code> 形式的完整服务名后返回。</td>
 <td style="text-align:left"><code>ServiceManager</code></td>
-<td style="text-align:left"><code>Collection&lt;String&gt;</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><code>returnDeferred()</code></td>
@@ -654,7 +642,6 @@
 <td style="text-align:left">waitMillis、index、Supplier</td>
 <td style="text-align:left">执行 <code>Supplier.get()</code> 获取业务结果，再创建 <code>ChangeItem</code> 并通过 <code>Single.just()</code> 封装为 RxJava 返回对象。</td>
 <td style="text-align:left"><code>Supplier</code></td>
-<td style="text-align:left"><code>Single&lt;ChangeItem&lt;T&gt;&gt;</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><code>isCurrentCenter()</code></td>
@@ -662,7 +649,6 @@
 <td style="text-align:left">Instance</td>
 <td style="text-align:left">读取实例 <code>Metadata</code>，获取配置的数据中心键和值，并通过 <code>equals()</code> 判断实例所属数据中心是否与当前配置一致，返回匹配结果。</td>
 <td style="text-align:left">Instance Metadata</td>
-<td style="text-align:left"><code>boolean</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><code>getServiceFromGroupedServiceName()</code></td>
@@ -670,7 +656,6 @@
 <td style="text-align:left">namespace、groupedServiceName、ephemeral</td>
 <td style="text-align:left">调用 <code>NamingUtils.getGroupName()</code> 和 <code>NamingUtils.getServiceName()</code> 解析 Group 和 ServiceName，再通过 <code>Service.newService()</code> 构建 Service 对象。</td>
 <td style="text-align:left"><code>NamingUtils</code></td>
-<td style="text-align:left"><code>Service</code></td>
 </tr>
 </tbody>
 </table>
@@ -680,10 +665,9 @@
 <thead>
 <tr>
 <th style="text-align:left">方法</th>
-<th style="text-align:left">功能描述</th>
+<th style="text-align:left"><div style="width: 80pt">功能描述</div></th>
 <th style="text-align:left">输入(Input)</th>
 <th style="text-align:left">内部操作</th>
-<th style="text-align:left">调用(Call)</th>
 <th style="text-align:left">输出(Output)</th>
 </tr>
 </thead>
@@ -694,7 +678,6 @@
 <td style="text-align:left">HttpServletRequest、srcUser、namespace、policy、MultipartFile(file)</td>
 <td style="text-align:left">首先校验上传文件是否为空（<code>Objects.isNull(file)</code>）；通过 <code>NamespaceUtil.processNamespaceParameter()</code> 处理 Namespace；调用 <code>namespacePersistService.tenantInfoCountByTenantId()</code> 校验命名空间是否存在；然后通过 <code>ZipUtils.unzip()</code> 解压上传 zip 文件，根据是否存在 <code>.metadata.yml</code> 判断调用 <code>parseImportDataV2()</code> 或 <code>parseImportData()</code> 解析配置内容；解析完成后调用 <code>configInfoPersistService.batchInsertOrUpdate()</code> 批量保存配置；最后通过 <code>ConfigChangePublisher.notifyConfigChange()</code> 发布配置变更事件，并通过 <code>ConfigTraceService.logPersistenceEvent()</code> 记录配置操作日志。</td>
 <td style="text-align:left"><code>ConfigInfoPersistService.batchInsertOrUpdate()</code><br><code>ConfigChangePublisher.notifyConfigChange()</code><br><code>ConfigTraceService.logPersistenceEvent()</code></td>
-<td style="text-align:left"><code>RestResult&lt;Map&lt;String,Object&gt;&gt;</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><code>parseImportData()</code></td>
@@ -702,7 +685,6 @@
 <td style="text-align:left">srcUser、Zip解压结果、配置列表、异常列表、namespace</td>
 <td style="text-align:left">获取 zip 中 metadata 信息（<code>getMetaDataItem()</code>）；遍历配置文件列表（<code>getZipItemList()</code>）；解析文件路径获取 group 和 dataId；调用 <code>EncryptionHandler.encryptHandler()</code> 对配置内容加密；创建 <code>ConfigAllInfo</code> 对象并设置配置属性；最后加入待保存集合 <code>configInfoList.add()</code>。</td>
 <td style="text-align:left"><code>ZipUtils.getZipItemList()</code><br>`EncryptionHandler.encryptHandler()</td>
-<td style="text-align:left"><code>RestResult&lt;Map&lt;String,Object&gt;&gt;</code> 或填充 <code>configInfoList</code></td>
 </tr>
 <tr>
 <td style="text-align:left"><code>parseImportDataV2()</code></td>
@@ -710,7 +692,6 @@
 <td style="text-align:left">srcUser、Zip解压结果、配置列表、异常列表、namespace</td>
 <td style="text-align:left">读取 metadata 文件（<code>getMetaDataItem()</code>）；通过 <code>YamlParserUtil.loadObject()</code> 将 YAML 转换为 <code>ConfigMetadata</code>；校验 metadata 信息；遍历导出的配置项；匹配 zip 中配置文件；调用 <code>EncryptionHandler.encryptHandler()</code> 加密配置内容；创建 <code>ConfigAllInfo</code> 并加入待保存列表。</td>
 <td style="text-align:left"><code>YamlParserUtil.loadObject()</code><br><code>EncryptionHandler.encryptHandler()</code></td>
-<td style="text-align:left"><code>RestResult&lt;Map&lt;String,Object&gt;&gt;</code> 或填充 <code>configInfoList</code></td>
 </tr>
 </tbody>
 </table>

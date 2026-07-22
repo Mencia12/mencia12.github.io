@@ -21,32 +21,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"mencia12.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"vs2015"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="尺度不变特征变换（Scale-invariant feature transform，SIFT），是用于图像处理领域的一种描述。">
+    <meta name="description" content="笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python|SIFT算法">
-<meta property="og:url" content="https://mencia12.github.io/2019/06/08/SIFT/index.html">
+<meta property="og:title" content="网关笔记">
+<meta property="og:url" content="https://mencia12.github.io/2026/07/21/%E7%BD%91%E5%85%B3%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Mencia&#39;s Blog">
-<meta property="og:description" content="尺度不变特征变换（Scale-invariant feature transform，SIFT），是用于图像处理领域的一种描述。">
+<meta property="og:description" content="笔记">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://mencia12.github.io/2019/06/08/SIFT/SIFT/1.png">
-<meta property="og:image" content="https://mencia12.github.io/2019/06/08/SIFT/SIFT/new.png">
-<meta property="article:published_time" content="2019-06-08T12:13:13.000Z">
-<meta property="article:modified_time" content="2025-07-14T16:00:56.000Z">
+<meta property="article:published_time" content="2026-07-21T01:03:17.000Z">
+<meta property="article:modified_time" content="2026-07-22T02:21:42.378Z">
 <meta property="article:author" content="Mengqiu">
-<meta property="article:tag" content="Python">
-<meta property="article:tag" content="OpenCV">
-<meta property="article:tag" content="SIFT">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://mencia12.github.io/2019/06/08/SIFT/SIFT/1.png">
 
 
-<link rel="canonical" href="https://mencia12.github.io/2019/06/08/SIFT/">
+<link rel="canonical" href="https://mencia12.github.io/2026/07/21/%E7%BD%91%E5%85%B3%E7%AC%94%E8%AE%B0/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://mencia12.github.io/2019/06/08/SIFT/","path":"2019/06/08/SIFT/","title":"Python|SIFT算法"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://mencia12.github.io/2026/07/21/%E7%BD%91%E5%85%B3%E7%AC%94%E8%AE%B0/","path":"2026/07/21/网关笔记/","title":"网关笔记"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Python|SIFT算法 | Mencia's Blog</title>
+<title>网关笔记 | Mencia's Blog</title>
   
 
 
@@ -169,7 +163,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text"> 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text"> 特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text"> 算法步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text"> 应用</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BB%91%E7%99%BD%E5%90%8D%E5%8D%95"><span class="nav-number">1.</span> <span class="nav-text"> 黑白名单</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8"><span class="nav-number">1.2.</span> <span class="nav-text"> 表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text"> 路由管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD-2"><span class="nav-number">2.1.</span> <span class="nav-text"> 功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8-2"><span class="nav-number">2.2.</span> <span class="nav-text"> 表</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -215,7 +209,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mencia12.github.io/2019/06/08/SIFT/">
+    <link itemprop="mainEntityOfPage" href="https://mencia12.github.io/2026/07/21/%E7%BD%91%E5%85%B3%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -228,12 +222,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Python|SIFT算法 | Mencia's Blog">
+      <meta itemprop="name" content="网关笔记 | Mencia's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Python|SIFT算法
+          网关笔记
         </h1>
 
         <div class="post-meta-container">
@@ -244,14 +238,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-06-08 20:13:13" itemprop="dateCreated datePublished" datetime="2019-06-08T20:13:13+08:00">2019-06-08</time>
+      <time title="创建时间：2026-07-21 09:03:17" itemprop="dateCreated datePublished" datetime="2026-07-21T09:03:17+08:00">2026-07-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-07-15 00:00:56" itemprop="dateModified" datetime="2025-07-15T00:00:56+08:00">2025-07-15</time>
+      <time title="修改时间：2026-07-22 10:21:42" itemprop="dateModified" datetime="2026-07-22T10:21:42+08:00">2026-07-22</time>
     </span>
 
   
@@ -263,42 +257,224 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><strong>尺度不变特征变换（Scale-invariant feature transform，SIFT），是用于图像处理领域的一种描述。</strong></p>
+    <div class="post-body" itemprop="articleBody"><p>笔记</p>
 <span id="more"></span>
-<h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1>
-<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/SIFT/1396275?fr=aladdin">SIFT算法</a>是一种提取局部特征的算法，基于物体上的一些局部外观的兴趣点而与影像的大小和旋转无关。对于光线、噪声、微视角改变的容忍度也相当高。基于这些特性，它们是高度显著而且相对容易撷取，在母数庞大的特征数据库中，很容易辨识物体而且鲜有误认。使用SIFT特征描述对于部分物体遮蔽的侦测率也相当高，甚至只需要3个以上的SIFT物体特征就足以计算出位置与方位。在现今的电脑硬件速度下和小型的特征数据库条件下，辨识速度可接近即时运算。SIFT特征的信息量大，适合在海量数据库中快速准确匹配。<br>
-匹配的过程就是对比这些特征点的过程，这个流程可以用下图表述：<br>
-<img data-src="SIFT/1.png" alt="1"></p>
-<h1 id="特点"><a class="markdownIt-Anchor" href="#特点"></a> 特点</h1>
-<ul>
-<li>SIFT特征是图像的局部特征，其对旋转、尺度缩放、亮度变化保持不变性，对视角变化、仿射变换、噪声也保持一定程度的稳定性。</li>
-<li>独特性好，信息量丰富，适用于在海量特征数据库中进行快速、准确匹配。</li>
-<li>多量性，即使少数的几个物体也可以产生大量SIFT特征向量。</li>
-<li>高速性，经优化的SIFT匹配算法甚至可以达到实时的要求。</li>
-<li>可扩展性，可以很方便的与其他形式的特征向量进行联合。</li>
-</ul>
-<h1 id="算法步骤"><a class="markdownIt-Anchor" href="#算法步骤"></a> 算法步骤</h1>
-<ol>
-<li>检测尺度空间极值点</li>
-<li>精确定位极值点</li>
-<li>为每个关键点指定方向参数</li>
-<li>关键点描述子的生成</li>
-</ol>
-<h1 id="应用"><a class="markdownIt-Anchor" href="#应用"></a> 应用</h1>
-<p>OpenCV中带有SIFT算法。可以直接调用</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import cv2</span><br><span class="line"></span><br><span class="line">img= cv2<span class="selector-class">.imread</span>(<span class="string">&#x27;C:/Code/Picture/apple.jpg&#x27;</span>)</span><br><span class="line">gray=cv2<span class="selector-class">.cvtColor</span>(<span class="selector-tag">img</span>,cv2.COLOR_BGR2GRAY)</span><br><span class="line"></span><br><span class="line">sift=cv2<span class="selector-class">.xfeatures2d</span><span class="selector-class">.SIFT_create</span>()</span><br><span class="line">keypoints,descriptor=sift<span class="selector-class">.detectAndCompute</span>(gray,None)</span><br><span class="line"></span><br><span class="line">img=cv2<span class="selector-class">.drawKeypoints</span>(image=<span class="selector-tag">img</span>,outImage=<span class="selector-tag">img</span>,keypoints=keypoints,flags=cv2<span class="selector-class">.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS</span>,<span class="attribute">color</span>=(<span class="number">51</span>,<span class="number">163</span>,<span class="number">236</span>))</span><br><span class="line">cv2<span class="selector-class">.imshow</span>(<span class="string">&#x27;sift_keypoints&#x27;</span>,img)</span><br><span class="line"></span><br><span class="line">cv2<span class="selector-class">.waitKey</span>(<span class="number">0</span>)</span><br><span class="line">cv2<span class="selector-class">.destroyAllWindows</span>()</span><br></pre></td></tr></table></figure>
-<p><img data-src="SIFT/new.png" alt="apple"></p>
-<blockquote>
-<p>OpenCV使用SIFT时报错,建议卸载后安装opencv-contrib-python,同时3.4.3.18以上的版本会出现专利问题而无法使用。安装前记得卸载原来的。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install opencv-contrib-python==<span class="number">3.4</span><span class="number">.2</span><span class="number">.17</span></span><br></pre></td></tr></table></figure>
-<hr>
-<blockquote>
-<p>参考文献<br>
-<a target="_blank" rel="noopener" href="https://blog.csdn.net/dcrmg/article/details/52577555">Sift算子特征点提取、描述及匹配全流程解析</a><br>
-<a target="_blank" rel="noopener" href="https://blog.csdn.net/dcrmg/article/details/52561656">Sift中尺度空间、高斯金字塔、差分金字塔（DOG金字塔）、图像金字塔</a></p>
-</blockquote>
+<h1 id="黑白名单"><a class="markdownIt-Anchor" href="#黑白名单"></a> 黑白名单</h1>
+<h2 id="功能"><a class="markdownIt-Anchor" href="#功能"></a> 功能</h2>
+<table style="width: 100%; table-layout: fixed;">
+  <thead>
+    <tr>
+      <th style="width: 40%; text-align: center;">方法</th>
+      <th style="width: 30%;">功能描述</th>
+      <th style="width: 30%;">输入(Input)</th>
+      <th style="width: 50%;">内部操作</th>
+      <th style="width: 30%;">输出(Output)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center;"><code>insertBlackWhiteIP</code></td>
+      <td style="word-break: break-all;">插入黑白名单</td>
+      <td>blackWhiteInfo</td>
+      <td>blackWhiteInfo</td>
+      <td>blackWhiteInfo</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;"><b>insertBlackWhiteIP</b></td>
+      <td style="word-break: break-all;"><code>/api/v1/data/list</code></td>
+      <td>需携带 Bearer Token</td>
+    </tr>
+  </tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:left"><div style="width: 110pt">功能描述</div></th>
+<th style="text-align:left">输入(Input)</th>
+<th style="text-align:left">内部操作</th>
+<th style="text-align:left">输出(Output)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">insertBlackWhiteIP</td>
+<td style="text-align:left">插入黑白名单</td>
+<td style="text-align:left">blackWhiteInfo</td>
+<td style="text-align:left">调用<code>Mapper.insertBlackWhiteIP</code>实现插入</td>
+<td style="text-align:left">Integer</td>
+</tr>
+<tr>
+<td style="text-align:left">updateBlackWhiteIP</td>
+<td style="text-align:left">更新黑白名单</td>
+<td style="text-align:left">blackWhiteInfo</td>
+<td style="text-align:left">调用<code>Mapper.updateBlackWhiteIP</code>实现更新</td>
+<td style="text-align:left">Integer</td>
+</tr>
+<tr>
+<td style="text-align:left">deleteBlackWhiteIP</td>
+<td style="text-align:left">删除黑白名单</td>
+<td style="text-align:left">blackWhiteInfo</td>
+<td style="text-align:left">调用<code>Mapper.deleteBlackWhiteIP</code>实现删除</td>
+<td style="text-align:left">Integer</td>
+</tr>
+<tr>
+<td style="text-align:left">selectALL</td>
+<td style="text-align:left">查询全部黑白名单</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">调用<code>Mapper.selectALL</code>实现查询</td>
+<td style="text-align:left">List</td>
+</tr>
+<tr>
+<td style="text-align:left">selectBWIp</td>
+<td style="text-align:left">根据名称查询黑白名单</td>
+<td style="text-align:left">name</td>
+<td style="text-align:left">调用<code>Mapper.selectBWIp</code>实现查询</td>
+<td style="text-align:left">List</td>
+</tr>
+<tr>
+<td style="text-align:left">insertBlackWhiteIP</td>
+<td style="text-align:left">插入黑白名单</td>
+<td style="text-align:left">blackWhiteInfo</td>
+<td style="text-align:left">调用<code>Mapper.insertBlackWhiteIP</code>实现插入</td>
+<td style="text-align:left">Integer</td>
+</tr>
+<tr>
+<td style="text-align:left">updateBlackWhiteIP</td>
+<td style="text-align:left">更新黑白名单</td>
+<td style="text-align:left">blackWhiteInfo</td>
+<td style="text-align:left">调用<code>Mapper.updateBlackWhiteIP</code>实现更新</td>
+<td style="text-align:left">Integer</td>
+</tr>
+<tr>
+<td style="text-align:left">deleteBlackWhiteIP</td>
+<td style="text-align:left">删除黑白名单</td>
+<td style="text-align:left">blackWhiteInfo</td>
+<td style="text-align:left">调用<code>Mapper.deleteBlackWhiteIP</code>实现删除</td>
+<td style="text-align:left">Integer</td>
+</tr>
+<tr>
+<td style="text-align:left">selectALL</td>
+<td style="text-align:left">查询全部黑白名单</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">调用<code>Mapper.selectALL</code>实现查询</td>
+<td style="text-align:left">List</td>
+</tr>
+<tr>
+<td style="text-align:left">selectBWIp</td>
+<td style="text-align:left">根据名称查询黑白名单</td>
+<td style="text-align:left">name</td>
+<td style="text-align:left">调用<code>Mapper.selectBWIp</code>实现查询</td>
+<td style="text-align:left">List</td>
+</tr>
+</tbody>
+</table>
+<h2 id="表"><a class="markdownIt-Anchor" href="#表"></a> 表</h2>
+<p>IP黑白名单表/black_white_ip</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">列名</th>
+<th style="text-align:center">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">name</td>
+<td style="text-align:center">黑白名单或状态标识</td>
+</tr>
+<tr>
+<td style="text-align:center">key</td>
+<td style="text-align:center">黑白名单类型键</td>
+</tr>
+<tr>
+<td style="text-align:center">value</td>
+<td style="text-align:center">具体值</td>
+</tr>
+</tbody>
+</table>
+<h1 id="路由管理"><a class="markdownIt-Anchor" href="#路由管理"></a> 路由管理</h1>
+<h2 id="功能-2"><a class="markdownIt-Anchor" href="#功能-2"></a> 功能</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:left"><div style="width: 60pt">功能描述</div></th>
+<th style="text-align:left">输入(Input)</th>
+<th style="text-align:left">内部操作</th>
+<th style="text-align:left">输出(Output)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">add</td>
+<td style="text-align:left">增加路由</td>
+<td style="text-align:left">路由定义模型<code>gwdefinition</code></td>
+<td style="text-align:left">根据id检测是否存在，调用<code>RouteService.assembleRouteDefinition</code>,具体实现在<code>DBRouteServiceImpl</code>。初始化路由定义对象<code>RouteDefinition</code>，存储所有谓词的列表<code>pdList</code>以及存储所有过滤器的列表<code>filterList</code>。从<code>gwdefinition</code>中获取所有谓词列表，遍历每个谓词，创建一个新的谓词对象，并将其添加到<code>pdList</code>。从<code>gwdefinition</code>中获取所有过滤器列表，遍历每个过滤器，创建一个新的过滤器对象，并将其添加到<code>filterList</code>，如果</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="表-2"><a class="markdownIt-Anchor" href="#表-2"></a> 表</h2>
+<p>路由信息表/route_info</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">列名</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">route_uid</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">route_id</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">predicate_ids</td>
+<td>路由谓词配置表id</td>
+</tr>
+<tr>
+<td style="text-align:center">filter_ids</td>
+<td>路由过滤器配置表id</td>
+</tr>
+<tr>
+<td style="text-align:center">router_order</td>
+<td>路由排序</td>
+</tr>
+<tr>
+<td style="text-align:center">uri</td>
+<td>服务路由配置的url</td>
+</tr>
+<tr>
+<td style="text-align:center">update_time</td>
+<td>路由最后一次更新时间</td>
+</tr>
+<tr>
+<td style="text-align:center">create_time</td>
+<td>路由创建时间</td>
+</tr>
+<tr>
+<td style="text-align:center">connect_timeout</td>
+<td>连接超时时间</td>
+</tr>
+<tr>
+<td style="text-align:center">response_timeout</td>
+<td>响应超时时间</td>
+</tr>
+<tr>
+<td style="text-align:center">err_response_formatter</td>
+<td>响应格式</td>
+</tr>
+</tbody>
+</table>
+<!-- # 
+## 功能
 
+## 表 -->
     </div>
 
     
@@ -306,24 +482,16 @@
     
 
     <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Python/" rel="tag"># Python</a>
-              <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
-              <a href="/tags/SIFT/" rel="tag"># SIFT</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2019/06/04/hadoop2/" rel="prev" title="JAVA|MapReduce-自连接算法">
-                  <i class="fa fa-angle-left"></i> JAVA|MapReduce-自连接算法
+                <a href="/2026/07/14/TAE%E7%AC%94%E8%AE%B0/" rel="prev" title="TAE笔记">
+                  <i class="fa fa-angle-left"></i> TAE笔记
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2019/06/10/%E8%BF%9C%E7%A8%8B%E7%B1%BB%E8%B0%83%E7%94%A8/" rel="next" title="JAVA|RPC&#x2F;RMI-书籍信息管理系统">
-                  JAVA|RPC/RMI-书籍信息管理系统 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
